@@ -57,7 +57,7 @@ Dự án được thực hiện bởi nhóm sinh viên:
 
 | 3 | **Lê Nguyễn Khánh Trình** 
 
-| 4 | **Hồ Gia Bảo** =
+| 4 | **Hồ Gia Bảo** 
 
 ---
 
