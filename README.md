@@ -51,10 +51,10 @@ Dự án được thực hiện bởi nhóm sinh viên:
 
 | STT | Họ và Tên |
 
-| 1 | **Hồ Duy Hải** 
-| 2 | **Lê Bảo Ngọc** 
-| 3 | **Lê Nguyễn Khánh Trình** 
-| 4 | **Hồ Gia Bảo** =
+*| 1 | **Hồ Duy Hải** 
+*| 2 | **Lê Bảo Ngọc** 
+*| 3 | **Lê Nguyễn Khánh Trình** 
+*| 4 | **Hồ Gia Bảo** =
 
 ---
 
