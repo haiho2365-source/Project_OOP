@@ -9,36 +9,20 @@ namespace Project_OOP
         private Person _author;
         private DateTime _timestamp;
 
-        public string Content
-        {
-            get { return this._content; }
-            set { this._content = value; }
-        }
+        public string Content { get; set; }
+        public Person Author { get; set; }
+        public DateTime Timestamp { get; set; }
 
-        public Person Author
-        {
-            get { return this._author; }
-            set { this._author = value; }
-        }
-
-        public DateTime Timestamp
-        {
-            get { return this._timestamp; }
-            set { this._timestamp = value; }
-        }
-
-        // Constructor không tham số (phục vụ serialize)
         public Comment()
         {
-            this._timestamp = DateTime.Now;
+            Timestamp = DateTime.Now;
         }
 
-        // Constructor đầy đủ
         public Comment(string content, Person author)
         {
-            this._content = content;
-            this._author = author;
-            this._timestamp = DateTime.Now;
+            Content = content;
+            Author = author;
+            Timestamp = DateTime.Now;
         }
     }
 }
