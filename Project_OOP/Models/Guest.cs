@@ -10,7 +10,6 @@ namespace Project_OOP
 
         public Guest() : base() { }
 
-        // Truyền cứng thông tin lên lớp cha qua base
         public Guest(string sessionId)
             : base("GUEST_ID", "Ẩn danh", "No Email")
         {
