@@ -6,11 +6,6 @@ namespace Project_OOP
     public class Guest : Person
     {
         private string _sessionId;
-        public string SessionId
-        {
-            get { return _sessionId; }
-            set { _sessionId = value; }
-        }
         public Guest() : base() 
         { 
         }
@@ -19,11 +14,17 @@ namespace Project_OOP
         {
             this._sessionId = sessionId;
         }
+        public string SessionId
+        {
+            get { return this._sessionId; }
+            set { this._sessionId = value; }
+        }
         public override void ShowInfo()
         {
             Console.WriteLine("[KHÁCH TRUY CẬP]");
-            Console.WriteLine("Mã phiên làm việc (Session): " + this.SessionId);
-            Console.WriteLine("Trạng thái: " + this.FullName); // Lấy từ lớp cha
+            string displaySession = "Mã phiên làm việc (Session): " + this.SessionId;
+            Console.WriteLine(displaySession);
+            Console.WriteLine("Trạng thái: " + this.FullName);
             Console.WriteLine("-------------------------");
         }
     }
