@@ -7,7 +7,7 @@ namespace Project_OOP
     public class Subscriber : Person
     {
         private bool _isPremium;
-        private List<string> _interestedTopics; // Explicit typing
+        private List<string> _interestedTopics;
 
         public Subscriber() : base() { }
 
@@ -20,7 +20,6 @@ namespace Project_OOP
 
         public void AddTopic(string topic)
         {
-            // Không dùng LINQ, thao tác danh sách cơ bản
             this._interestedTopics.Add(topic);
         }
 
@@ -31,7 +30,6 @@ namespace Project_OOP
             Console.WriteLine("Tên: " + this._fullName);
             Console.WriteLine("Chủ đề quan tâm: ");
 
-            // Dùng vòng lặp foreach cơ bản
             foreach (string topic in _interestedTopics)
             {
                 Console.Write("- " + topic + " ");
