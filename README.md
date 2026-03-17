@@ -31,7 +31,7 @@ Bạn có thể cài đặt và chạy thử nghiệm dự án theo các bước
 * Nhấn vào nút **Code** (màu xanh lá) phía trên repository và chọn **Download ZIP**, sau đó giải nén file.
 * Hoặc clone về máy bằng lệnh Git:
     ```bash
-    git clone [Link-Repository-Cua-Ban]
+    https://github.com/haiho2365-source/Project_OOP.git
     ```
 
 **Bước 2: Mở dự án**
