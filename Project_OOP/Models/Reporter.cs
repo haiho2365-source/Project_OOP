@@ -7,24 +7,36 @@ namespace Project_OOP
     {
         private string _department;
         private int _postsCount;
-        public string Department { get; set; }
-        public int PostsCount { get; set; }
-        public Reporter() : base() { }
+        public Reporter() : base()
+        {
+        }
         public Reporter(string id, string fullName, string email, string department)
             : base(id, fullName, email)
         {
-            this.Department = department; 
-            this.PostsCount = 0;          
+            this._department = department;
+            this._postsCount = 0;
+        }
+        public string Department
+        {
+            get { return this._department; }
+            set { this._department = value; }
+        }
+
+        public int PostsCount
+        {
+            get { return this._postsCount; }
+            set { this._postsCount = value; }
         }
         public void UpdatePostCount()
         {
-            this.PostsCount = this.PostsCount + 1;
+            this._postsCount = this._postsCount + 1;
         }
         public override void ShowInfo()
         {
             Console.WriteLine("[PHÓNG VIÊN]");
-            Console.WriteLine("Tên: " + this.FullName + " | Phòng ban: " + this.Department);
-            Console.WriteLine("Số lượng bài viết đã thực hiện: " + this.PostsCount);
+            string info = "Tên: " + this.FullName + " | Phòng ban: " + this.Department;
+            Console.WriteLine(info);
+            Console.WriteLine("Số lượng bài viết đã thực hiện: " + this.PostsCount.ToString());
             Console.WriteLine("-------------------------");
         }
     }
