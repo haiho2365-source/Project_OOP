@@ -16,7 +16,6 @@ namespace Project_OOP
 
         public Admin() : base() { }
 
-        // Sử dụng base để khởi tạo lớp cha
         public Admin(string id, string fullName, string email, string password, string role)
             : base(id, fullName, email)
         {
@@ -29,7 +28,6 @@ namespace Project_OOP
             return this._password == inputPass;
         }
 
-        // Ghi đè phương thức (Đa hình)
         public override void ShowInfo()
         {
             Console.WriteLine("[QUẢN TRỊ VIÊN]");
