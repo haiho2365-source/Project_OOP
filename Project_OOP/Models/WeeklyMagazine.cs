@@ -43,7 +43,7 @@ namespace Project_OOP
             Console.WriteLine("Tác giả: " + _author);
             Console.WriteLine("Nguồn tham khảo:");
 
-            for (int i = 0; i < _references.Count; i = i + 1)
+            for (int i = 0; i < _references.Count; i++)
             {
                 Console.WriteLine(" + " + _references[i]);
             }
