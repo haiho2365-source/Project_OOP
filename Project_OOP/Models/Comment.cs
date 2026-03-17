@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_OOP
 {
@@ -9,20 +9,34 @@ namespace Project_OOP
         private Person _author;
         private DateTime _timestamp;
 
-        public string Content { get; set; }
-        public Person Author { get; set; }
-        public DateTime Timestamp { get; set; }
+        public string Content
+        {
+            get { return _content; }
+            set { _content = value; }
+        }
+
+        public Person Author
+        {
+            get { return _author; }
+            set { _author = value; }
+        }
+
+        public DateTime Timestamp
+        {
+            get { return _timestamp; }
+            set { _timestamp = value; }
+        }
 
         public Comment()
         {
-            Timestamp = DateTime.Now;
+            _timestamp = DateTime.Now;
         }
 
         public Comment(string content, Person author)
         {
-            Content = content;
-            Author = author;
-            Timestamp = DateTime.Now;
+            _content = content;
+            _author = author;
+            _timestamp = DateTime.Now;
         }
     }
 }
