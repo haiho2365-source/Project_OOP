@@ -1,7 +1,6 @@
-﻿using Project_OOP;
+using Project_OOP;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,10 +11,23 @@ namespace Project_OOP
     {
         private string _author;
         private List<string> _references;
-
+        public List<string> References
+        {
+            get
+            {
+                return this._references;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    this._references = value;
+                }
+            }
+        }
         public WeeklyMagazine() : base()
         {
-            _references = new List<string>();
+            this._references = new List<string>();
         }
 
         public WeeklyMagazine(string id, string title, DateTime publishDate, string author)
@@ -28,24 +40,30 @@ namespace Project_OOP
         public string Author
         {
             get { return _author; }
-            set { _author = value; }
+            set 
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    this._author = value;
+                }
+            }
         }
 
         public void AddReference(string link)
         {
-            _references.Add(link);
+            this.References.Add(link);
         }
 
         public override void DisplayContent()
         {
             Console.WriteLine("--- WEEKLY MAGAZINE ---");
-            Console.WriteLine("Tiêu đề: " + _title);
-            Console.WriteLine("Tác giả: " + _author);
+            Console.WriteLine("Tiêu đề: " + Title);
+            Console.WriteLine("Tác giả: " + Author);
             Console.WriteLine("Nguồn tham khảo:");
 
-            for (int i = 0; i < _references.Count; i++)
+            for (int i = 0; i < References.Count; i++)
             {
-                Console.WriteLine(" + " + _references[i]);
+                Console.WriteLine(" + " + References[i]);
             }
         }
     }
