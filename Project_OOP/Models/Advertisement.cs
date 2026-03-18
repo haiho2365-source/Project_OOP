@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Project_OOP
 {
@@ -7,8 +7,17 @@ namespace Project_OOP
         private string _sponsorName;
         private string _content;
 
-        public string SponsorName { get; set; }
-        public string Content { get; set; }
+        public string SponsorName
+        {
+            get { return _sponsorName; }
+            set { _sponsorName = value; }
+        }
+
+        public string Content
+        {
+            get { return _content; }
+            set { _content = value; }
+        }
 
         public Advertisement()
         {
@@ -16,15 +25,15 @@ namespace Project_OOP
 
         public Advertisement(string sponsorName, string content)
         {
-            SponsorName = sponsorName;
-            Content = content;
+            _sponsorName = sponsorName;
+            _content = content;
         }
 
         public string ShowAd()
         {
-            return $"Advertisement" +
-                $"\nSponsor: {SponsorName}" +
-                $"\nContent: {Content}";
+            return "Advertisement" +
+                   "\nSponsor: " + _sponsorName +
+                   "\nContent: " + _content;
         }
     }
 }
