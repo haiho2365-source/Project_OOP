@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,14 +20,25 @@ namespace Project_OOP
 
         public void Confirm()
         {
-            _isConfirmed = true;
+            IsConfirmed = true;
+        }
+        public bool IsConfirmed
+        {
+            get
+            {
+                return this._isConfirmed;
+            }
+            set
+            {
+                this._isConfirmed = value;
+            }
         }
 
         public override void DisplayContent()
         {
             Console.WriteLine("********************");
             Console.WriteLine("TIN KHẨN CẤP");
-            if (_isConfirmed == true)
+            if (IsConfirmed)
             {
                 Console.WriteLine("Trạng thái: Đã xác thực");
             }
