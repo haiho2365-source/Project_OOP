@@ -1,7 +1,6 @@
-﻿using Project_OOP;
+using Project_OOP;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,20 +22,30 @@ namespace Project_OOP
         public int TrendLevel
         {
             get { return _trendLevel; }
-            set { _trendLevel = value; }
+            set 
+            {
+                if (value >= 0)
+                {
+                    this._trendLevel = value;
+                }
+                else
+                {
+                    Console.WriteLine("TrendLevel không hợp lệ!");
+                }
+            }
         }
 
         public override void DisplayContent()
         {
-            string summary = _title;
-            if (_title.Length > 50)
+            string summary = Title;
+            if (Title.Length > 50)
             {
-                summary = _title.Substring(0, 50);
+                summary = Title.Substring(0, 50);
             }
 
             Console.WriteLine("--- DAILY NEWS ---");
             Console.WriteLine("Tiêu đề: " + summary);
-            Console.WriteLine("Trend: " + _trendLevel);
+            Console.WriteLine("Trend: " + TrendLevel);
         }
     }
 }
