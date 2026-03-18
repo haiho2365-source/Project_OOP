@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Project_OOP
@@ -11,6 +11,11 @@ namespace Project_OOP
         {
             string logEntry = DateTime.Now.ToString() + " - " + message;
             _logs.Add(logEntry);
+        }
+
+        public static List<string> GetLogs()
+        {
+            return _logs;
         }
 
         public static void PrintLogs()
