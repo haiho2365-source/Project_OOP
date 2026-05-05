@@ -6,18 +6,26 @@ namespace Project_OOP
     [Serializable]
     public class Subscriber : Person
     {
+
         private bool _isPremium;
         private List<string> _interestedTopics;
+        private string _password; 
+
         public Subscriber() : base()
         {
+
             this._interestedTopics = new List<string>();
         }
-        public Subscriber(string id, string fullName, string email, bool isPremium)
+a
+        public Subscriber(string id, string fullName, string email, bool isPremium, string password)
             : base(id, fullName, email)
         {
             this._isPremium = isPremium;
+            this._password = password; 
             this._interestedTopics = new List<string>();
         }
+
+
         public bool IsPremium
         {
             get { return this._isPremium; }
@@ -29,10 +37,34 @@ namespace Project_OOP
             get { return this._interestedTopics; }
             set { this._interestedTopics = value; }
         }
+
+        public string Password
+        {
+            get { return this._password; }
+            set { this._password = value; }
+        }
+
+        public bool CheckPassword(string inputPassword)
+        {
+            bool isMatched = false;
+
+            if (this._password == inputPassword)
+            {
+                isMatched = true;
+            }
+            else
+            {
+                isMatched = false;
+            }
+
+            return isMatched;
+        }
+
         public void AddTopic(string topic)
         {
             this._interestedTopics.Add(topic);
         }
+
         public override void ShowInfo()
         {
             string status = "";
@@ -46,8 +78,9 @@ namespace Project_OOP
             }
 
             Console.WriteLine("[THUÊ BAO] " + status);
-            Console.WriteLine("Tên: " + this.FullName);
+            Console.WriteLine("Tên: " + this.FullName); 
             Console.WriteLine("Chủ đề quan tâm: ");
+
             for (int i = 0; i < this._interestedTopics.Count; i = i + 1)
             {
                 string topic = this._interestedTopics[i];
