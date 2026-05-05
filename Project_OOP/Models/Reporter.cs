@@ -7,15 +7,20 @@ namespace Project_OOP
     {
         private string _department;
         private int _postsCount;
+        private string _password; 
+
         public Reporter() : base()
         {
         }
-        public Reporter(string id, string fullName, string email, string department)
+
+        public Reporter(string id, string fullName, string email, string department, string password)
             : base(id, fullName, email)
         {
             this._department = department;
             this._postsCount = 0;
+            this._password = password;
         }
+
         public string Department
         {
             get { return this._department; }
@@ -27,10 +32,34 @@ namespace Project_OOP
             get { return this._postsCount; }
             set { this._postsCount = value; }
         }
+
+        public string Password
+        {
+            get { return this._password; }
+            set { this._password = value; }
+        }
+
+        public bool CheckPassword(string inputPassword)
+        {
+            bool isMatched = false;
+
+            if (this._password == inputPassword)
+            {
+                isMatched = true;
+            }
+            else
+            {
+                isMatched = false;
+            }
+
+            return isMatched;
+        }
+
         public void UpdatePostCount()
         {
             this._postsCount = this._postsCount + 1;
         }
+
         public override void ShowInfo()
         {
             Console.WriteLine("[PHÓNG VIÊN]");
