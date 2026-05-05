@@ -6,7 +6,6 @@ namespace Project_OOP
     [Serializable]
     public class Subscriber : Person
     {
-
         private bool _isPremium;
         private List<string> _interestedTopics;
         private string _password; 
@@ -16,7 +15,7 @@ namespace Project_OOP
 
             this._interestedTopics = new List<string>();
         }
-a
+
         public Subscriber(string id, string fullName, string email, bool isPremium, string password)
             : base(id, fullName, email)
         {
@@ -24,7 +23,6 @@ a
             this._password = password; 
             this._interestedTopics = new List<string>();
         }
-
 
         public bool IsPremium
         {
@@ -44,20 +42,15 @@ a
             set { this._password = value; }
         }
 
-        public bool CheckPassword(string inputPassword)
+
+        public bool CheckPassword(string inputPass)
         {
-            bool isMatched = false;
-
-            if (this._password == inputPassword)
+            bool isCorrect = false;
+            if (this._password == inputPass)
             {
-                isMatched = true;
+                isCorrect = true;
             }
-            else
-            {
-                isMatched = false;
-            }
-
-            return isMatched;
+            return isCorrect;
         }
 
         public void AddTopic(string topic)
