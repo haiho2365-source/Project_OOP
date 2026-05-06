@@ -8,6 +8,7 @@ namespace Project_OOP
     {
         private string _password;
         private string _role;
+        
         public Admin() : base() 
         { 
         }
@@ -23,11 +24,12 @@ namespace Project_OOP
             set { this._password = value; }
         }
 
-        public string Role
+        public override string Role
         {
             get { return this._role; }
             set { this._role = value; }
         }
+        
         public bool CheckPassword(string inputPass)
         {
             bool isCorrect = false;

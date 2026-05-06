@@ -10,6 +10,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
         private Database _database = new Database();
         private UserManager _userManager;
         private int _selectedRole = 0;
+        private PublicationManager _pubManager = new PublicationManager();
 
         public Login()
         {
@@ -23,7 +24,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
             Admin adminAccount = new Admin("AD01", "Admin User", "admin@ueh.edu.vn", "123456", "Manager");
             _userManager.AddUser(adminAccount);
 
-            Reporter reporterAccount = new Reporter("RP01", "Reporter User", "reporter@ueh.edu.vn", "News Dept", "123");
+            Project_OOP.Reporter reporterAccount = new Project_OOP.Reporter("RP01", "Reporter User", "reporter@ueh.edu.vn", "News Dept", "123");
             _userManager.AddUser(reporterAccount);
 
             Subscriber subscriberAccount = new Subscriber("SB01", "Subscriber User", "sub@ueh.edu.vn", true, "123");
@@ -106,7 +107,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
                 isPasswordCorrect = admin.CheckPassword(password);
                 userRoleName = "Quản trị viên";
             }
-            else if (userFound is Reporter reporter)
+            else if (userFound is Project_OOP.Reporter reporter)
             {
                 isPasswordCorrect = reporter.CheckPassword(password);
                 userRoleName = "Phóng viên";
@@ -120,12 +121,30 @@ namespace PROJECT_OOP_WINFORM_FINAL
             if (isPasswordCorrect)
             {
                 bool isRightRole = (_selectedRole == 1 && userFound is Admin) ||
-                                   (_selectedRole == 2 && userFound is Reporter) ||
+                                   (_selectedRole == 2 && userFound is Report_screen) ||
                                    (_selectedRole == 3 && userFound is Subscriber);
 
                 if (isRightRole)
                 {
                     MessageBox.Show($"MẬT KHẨU CHÍNH XÁC. Chào mừng {userRoleName} {userFound.FullName} đã đăng nhập thành công", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // --- ĐÃ THÊM CODE CHUYỂN FORM Ở ĐÂY ---
+                    if (_selectedRole == 1) // Nếu là Admin
+                    {
+                        // Truyền đủ 3 món: db, uMgr, pMgr sang Form Manager
+                        Manager frmManager = new Manager(this._database, this._userManager, this._pubManager);
+                        this.Hide();
+                        frmManager.ShowDialog();
+                        this.Show(); // Mở lại form login sau khi đăng xuất khỏi Manager
+                    }
+                    else if (_selectedRole == 2)
+                    {
+                        // Sau này bạn làm Form cho Phóng viên thì thêm code mở form ở đây
+                    }
+                    else if (_selectedRole == 3)
+                    {
+                        // Sau này bạn làm Form cho Độc giả thì thêm code mở form ở đây
+                    }
                 }
                 else
                 {
