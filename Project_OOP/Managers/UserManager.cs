@@ -32,18 +32,36 @@ public class UserManager
         Person user = FindUser(email);
         if (user != null)
         {
-            if (user is Admin)
+            if (user is Admin admin)
             {
-                Admin adminUser = (Admin)user;
-                return adminUser.CheckPassword(password);
+                return admin.CheckPassword(password);
+            }
+            else if (user is Reporter reporter)
+            {
+                return reporter.CheckPassword(password);
+            }
+            else if (user is Subscriber subscriber)
+            {
+                return subscriber.CheckPassword(password);
             }
         }
         return false;
     }
 
-    public List<Person> GetUserList()
+    public List<Person> GetUsersForDisplay()
     {
-        return _userList;
+        List<Person> displayList = new List<Person>();
+
+        for (int i = 0; i < this._userList.Count; i = i + 1)
+        {
+            Person p = this._userList[i];
+
+            if (!(p is Admin))
+            {
+                displayList.Add(p);
+            }
+        }
+        return displayList;
     }
 
     public void SetUserList(List<Person> loadedList)

@@ -8,7 +8,8 @@ namespace Project_OOP
     {
         private bool _isPremium;
         private List<string> _interestedTopics;
-        private string _password; 
+        private string _password;
+        public override string Role => "Độc giả";
 
         public Subscriber() : base()
         {

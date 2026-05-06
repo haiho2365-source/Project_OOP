@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Project_OOP
 {
@@ -8,6 +8,7 @@ namespace Project_OOP
         protected string _id;
         protected string _fullName;
         protected string _email;
+        public virtual string Role { get; set; } = "Người dùng";
         public Person()
         {
         }

@@ -7,8 +7,10 @@ namespace Project_OOP
     {
         private string _department;
         private int _postsCount;
-        private string _password; 
-        
+        private string _password;
+        public override string Role => "Phóng viên";
+
+
         public Reporter() : base()
         {
         }

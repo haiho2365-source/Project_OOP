@@ -24,3 +24,7 @@ C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8
 C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\ref\PROJECT_OOP_WINFORM_FINAL.dll
 C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.Login.resources
 C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.Register.resources
+C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.Manager.resources
+C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.User.resources
+C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.Report_screen.resources
+C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.UC_UserManagement.resources
