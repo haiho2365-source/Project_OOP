@@ -32,17 +32,22 @@
             btnDelete = new Button();
             dgvNews = new DataGridView();
             rtbContent = new RichTextBox();
-            btnUnapprove = new Button();
+            cbFilter = new ComboBox();
+            btnFilter = new Button();
+            btnCloseContent = new Button();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            cbTimeFilter = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dgvNews).BeginInit();
             SuspendLayout();
             // 
             // btnApprove
             // 
-            btnApprove.BackColor = Color.White;
+            btnApprove.BackColor = Color.FromArgb(76, 175, 80);
             btnApprove.FlatStyle = FlatStyle.Flat;
-            btnApprove.Location = new Point(5, 58);
+            btnApprove.ForeColor = Color.White;
+            btnApprove.Location = new Point(592, 41);
             btnApprove.Name = "btnApprove";
-            btnApprove.Size = new Size(112, 34);
+            btnApprove.Size = new Size(112, 55);
             btnApprove.TabIndex = 18;
             btnApprove.Text = "Duyệt";
             btnApprove.UseVisualStyleBackColor = false;
@@ -50,11 +55,12 @@
             // 
             // btnDelete
             // 
-            btnDelete.BackColor = Color.White;
+            btnDelete.BackColor = Color.FromArgb(198, 40, 40);
             btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Location = new Point(306, 58);
+            btnDelete.ForeColor = Color.White;
+            btnDelete.Location = new Point(710, 41);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(112, 34);
+            btnDelete.Size = new Size(112, 55);
             btnDelete.TabIndex = 17;
             btnDelete.Text = "Xoá";
             btnDelete.UseVisualStyleBackColor = false;
@@ -76,34 +82,67 @@
             // rtbContent
             // 
             rtbContent.BackColor = Color.White;
-            rtbContent.Location = new Point(188, 22);
+            rtbContent.Location = new Point(262, 41);
             rtbContent.Name = "rtbContent";
             rtbContent.ReadOnly = true;
-            rtbContent.Size = new Size(721, 584);
+            rtbContent.Size = new Size(678, 470);
             rtbContent.TabIndex = 19;
             rtbContent.Text = "";
+            rtbContent.TextChanged += rtbContent_TextChanged;
             // 
-            // btnUnapprove
+            // cbFilter
             // 
-            btnUnapprove.BackColor = Color.White;
-            btnUnapprove.FlatStyle = FlatStyle.Flat;
-            btnUnapprove.Location = new Point(153, 58);
-            btnUnapprove.Name = "btnUnapprove";
-            btnUnapprove.Size = new Size(112, 34);
-            btnUnapprove.TabIndex = 20;
-            btnUnapprove.Text = "Huỷ duyệt";
-            btnUnapprove.UseVisualStyleBackColor = false;
-            btnUnapprove.Click += btnUnapprove_Click;
+            cbFilter.FormattingEnabled = true;
+            cbFilter.Location = new Point(3, 60);
+            cbFilter.Name = "cbFilter";
+            cbFilter.Size = new Size(286, 36);
+            cbFilter.TabIndex = 21;
+            // 
+            // btnFilter
+            // 
+            btnFilter.BackColor = Color.White;
+            btnFilter.FlatStyle = FlatStyle.Flat;
+            btnFilter.Location = new Point(589, 62);
+            btnFilter.Name = "btnFilter";
+            btnFilter.Size = new Size(112, 34);
+            btnFilter.TabIndex = 22;
+            btnFilter.Text = "Lọc";
+            btnFilter.UseVisualStyleBackColor = false;
+            btnFilter.Click += btnFilter_Click;
+            // 
+            // btnCloseContent
+            // 
+            btnCloseContent.BackColor = Color.FromArgb(255, 112, 67);
+            btnCloseContent.FlatStyle = FlatStyle.Flat;
+            btnCloseContent.ForeColor = Color.White;
+            btnCloseContent.Location = new Point(828, 41);
+            btnCloseContent.Name = "btnCloseContent";
+            btnCloseContent.Size = new Size(112, 55);
+            btnCloseContent.TabIndex = 23;
+            btnCloseContent.Text = "Đóng";
+            btnCloseContent.UseVisualStyleBackColor = false;
+            btnCloseContent.Click += btnCloseContent_Click;
+            // 
+            // cbTimeFilter
+            // 
+            cbTimeFilter.FormattingEnabled = true;
+            cbTimeFilter.Location = new Point(295, 60);
+            cbTimeFilter.Name = "cbTimeFilter";
+            cbTimeFilter.Size = new Size(288, 36);
+            cbTimeFilter.TabIndex = 24;
             // 
             // UC_NewsManager
             // 
             AutoScaleDimensions = new SizeF(11F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btnUnapprove);
-            Controls.Add(rtbContent);
-            Controls.Add(btnApprove);
             Controls.Add(btnDelete);
+            Controls.Add(btnCloseContent);
+            Controls.Add(btnApprove);
+            Controls.Add(rtbContent);
+            Controls.Add(btnFilter);
             Controls.Add(dgvNews);
+            Controls.Add(cbFilter);
+            Controls.Add(cbTimeFilter);
             Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Name = "UC_NewsManager";
             Size = new Size(1043, 609);
@@ -117,6 +156,10 @@
         private Button btnDelete;
         private DataGridView dgvNews;
         private RichTextBox rtbContent;
-        private Button btnUnapprove;
+        private ComboBox cbFilter;
+        private Button btnFilter;
+        private Button btnCloseContent;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ComboBox cbTimeFilter;
     }
 }

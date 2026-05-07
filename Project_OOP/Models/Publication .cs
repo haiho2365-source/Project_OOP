@@ -13,6 +13,7 @@ namespace Project_OOP
         protected DateTime _publishDate;
         protected int _viewCount = 0;
         protected bool _isApproved;
+        protected DateTime _airTime = DateTime.Now;
         public Publication()
         {
             this._isApproved = false;
@@ -70,6 +71,12 @@ namespace Project_OOP
         public int ViewCount
         {
             get { return this._viewCount; }
+        }
+
+        public DateTime AirTime
+        { 
+            get { return this._airTime; } 
+            set { this._airTime = value; }
         }
 
         public void IncrementView()
