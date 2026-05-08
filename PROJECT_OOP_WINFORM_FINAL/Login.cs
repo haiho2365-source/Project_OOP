@@ -121,21 +121,20 @@ namespace PROJECT_OOP_WINFORM_FINAL
             if (isPasswordCorrect)
             {
                 bool isRightRole = (_selectedRole == 1 && userFound is Admin) ||
-                                   (_selectedRole == 2 && userFound is Report_screen) ||
+                                   (_selectedRole == 2 && userFound is Project_OOP.Reporter) ||
                                    (_selectedRole == 3 && userFound is Subscriber);
 
                 if (isRightRole)
                 {
                     MessageBox.Show($"MẬT KHẨU CHÍNH XÁC. Chào mừng {userRoleName} {userFound.FullName} đã đăng nhập thành công", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // --- ĐÃ THÊM CODE CHUYỂN FORM Ở ĐÂY ---
-                    if (_selectedRole == 1) // Nếu là Admin
+                    if (_selectedRole == 1) 
                     {
-                        // Truyền đủ 3 món: db, uMgr, pMgr sang Form Manager
-                        Manager frmManager = new Manager(this._database, this._userManager, this._pubManager);
+                        Manager frmManager = new Manager(this._database, this._userManager, this._pubManager, userFound);
+
                         this.Hide();
                         frmManager.ShowDialog();
-                        this.Show(); // Mở lại form login sau khi đăng xuất khỏi Manager
+                        this.Show(); 
                     }
                     else if (_selectedRole == 2)
                     {

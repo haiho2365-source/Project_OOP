@@ -85,6 +85,7 @@
             btnProfile.TabIndex = 6;
             btnProfile.Text = "Hồ sơ";
             btnProfile.UseVisualStyleBackColor = false;
+            btnProfile.Click += btnProfile_Click;
             btnProfile.MouseEnter += btnNav_MouseEnter;
             btnProfile.MouseLeave += btnNav_MouseLeave;
             // 

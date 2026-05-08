@@ -19,6 +19,9 @@
     <Compile Update="UC_NewsManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UC_Profile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UC_UserManagement.cs">
       <SubType>UserControl</SubType>
     </Compile>
