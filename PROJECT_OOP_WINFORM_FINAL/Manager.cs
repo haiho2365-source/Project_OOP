@@ -1,4 +1,4 @@
-﻿using Project_OOP; 
+﻿using Project_OOP;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -11,18 +11,24 @@ namespace PROJECT_OOP_WINFORM_FINAL
         private UserManager _userManager;
         private PublicationManager _pubManager;
 
+        // 1. THÊM DÒNG NÀY: Khai báo biến lưu người dùng đang đăng nhập
+        private Person _currentUser;
+
         private Button _currentActiveButton;
 
-        public Manager(Database db, UserManager uMgr, PublicationManager pMgr)
+        // 2. SỬA HÀM KHỞI TẠO (Constructor): Thêm 'Person currentUser' vào tham số
+        public Manager(Database db, UserManager uMgr, PublicationManager pMgr, Person currentUser)
         {
             InitializeComponent();
 
             this._database = db;
             this._userManager = uMgr;
             this._pubManager = pMgr;
+
+            // Gán thông tin người dùng từ màn hình Login truyền sang
+            this._currentUser = currentUser;
         }
 
-       
         private void ShowFunction(UserControl uc)
         {
             panel2.Controls.Clear();
@@ -59,7 +65,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
             Button btn = (Button)sender;
             if (btn != _currentActiveButton)
             {
-                btn.BackColor = Color.FromArgb(255, 112, 67); 
+                btn.BackColor = Color.FromArgb(255, 112, 67);
             }
         }
 
@@ -68,7 +74,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
             Button btn = (Button)sender;
             if (btn != _currentActiveButton)
             {
-                btn.BackColor = Color.FromArgb(0, 114, 118); 
+                btn.BackColor = Color.FromArgb(0, 114, 118);
             }
         }
 
@@ -76,7 +82,6 @@ namespace PROJECT_OOP_WINFORM_FINAL
         {
             ActivateButton(sender);
             ShowFunction(new UC_UserManagement(_userManager));
-
         }
 
         private void btnPostMgr_Click(object sender, EventArgs e)
@@ -94,11 +99,32 @@ namespace PROJECT_OOP_WINFORM_FINAL
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Close(); 
+            this.Close();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
+        }
+
+        private void btnProfile_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+
+            if (this._currentUser != null)
+            {
+                UC_Profile ucProfile = new UC_Profile(this._currentUser);
+
+                // Đã đổi 'pnlContent' thành 'panel2' cho đúng với thiết kế của bạn
+                this.panel2.Controls.Clear();
+
+                ucProfile.Dock = DockStyle.Fill;
+                this.panel2.Controls.Add(ucProfile);
+                ucProfile.BringToFront();
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy thông tin tài khoản!");
+            }
         }
     }
 }
