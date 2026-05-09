@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,8 @@ namespace Project_OOP
         protected int _viewCount = 0;
         protected bool _isApproved;
         protected DateTime _airTime = DateTime.Now;
+        protected string _content;
+        protected string _videoUrl;
         public Publication()
         {
             this._isApproved = false;
@@ -78,6 +81,19 @@ namespace Project_OOP
             get { return this._airTime; } 
             set { this._airTime = value; }
         }
+
+        public string Content
+        {
+            get { return this._content; }
+            set { this._content = value; }
+        }
+
+        public string VideoUrl
+        {
+            get { return this._videoUrl; }
+            set { this._videoUrl = value; }
+        }
+
 
         public void IncrementView()
         {

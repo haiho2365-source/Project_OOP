@@ -138,7 +138,11 @@ namespace PROJECT_OOP_WINFORM_FINAL
                     }
                     else if (_selectedRole == 2)
                     {
-                        // Sau này bạn làm Form cho Phóng viên thì thêm code mở form ở đây
+                        Report_screen frmReport_screen = new Report_screen(this._pubManager, userFound);
+
+                        this.Hide();
+                        frmReport_screen.ShowDialog();
+                        this.Show();
                     }
                     else if (_selectedRole == 3)
                     {
