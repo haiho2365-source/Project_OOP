@@ -10,13 +10,9 @@ namespace PROJECT_OOP_WINFORM_FINAL
         private Database _database;
         private UserManager _userManager;
         private PublicationManager _pubManager;
-
-        // 1. THÊM DÒNG NÀY: Khai báo biến lưu người dùng đang đăng nhập
         private Person _currentUser;
-
         private Button _currentActiveButton;
 
-        // 2. SỬA HÀM KHỞI TẠO (Constructor): Thêm 'Person currentUser' vào tham số
         public Manager(Database db, UserManager uMgr, PublicationManager pMgr, Person currentUser)
         {
             InitializeComponent();
@@ -24,16 +20,16 @@ namespace PROJECT_OOP_WINFORM_FINAL
             this._database = db;
             this._userManager = uMgr;
             this._pubManager = pMgr;
-
-            // Gán thông tin người dùng từ màn hình Login truyền sang
-            this._currentUser = currentUser;
+            this._currentUser = currentUser; // Lưu thông tin người dùng đang đăng nhập
         }
 
+        // Hàm hỗ trợ hiển thị UserControl vào Panel2
         private void ShowFunction(UserControl uc)
         {
             panel2.Controls.Clear();
             uc.Dock = DockStyle.Fill;
             panel2.Controls.Add(uc);
+            uc.BringToFront();
         }
 
         private void ActivateButton(object btnSender)
@@ -87,23 +83,10 @@ namespace PROJECT_OOP_WINFORM_FINAL
         private void btnPostMgr_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            UC_NewsManager uc = new UC_NewsManager(this._pubManager);
 
-            this.panel2.Controls.Clear();
+            UC_NewsManager uc = new UC_NewsManager(this._pubManager, this._currentUser);
 
-            this.panel2.Controls.Add(uc);
-            uc.Dock = DockStyle.Fill;
-
-            uc.BringToFront();
-        }
-
-        private void btnLogout_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
+            ShowFunction(uc);
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
@@ -113,18 +96,22 @@ namespace PROJECT_OOP_WINFORM_FINAL
             if (this._currentUser != null)
             {
                 UC_Profile ucProfile = new UC_Profile(this._currentUser);
-
-                // Đã đổi 'pnlContent' thành 'panel2' cho đúng với thiết kế của bạn
-                this.panel2.Controls.Clear();
-
-                ucProfile.Dock = DockStyle.Fill;
-                this.panel2.Controls.Add(ucProfile);
-                ucProfile.BringToFront();
+                ShowFunction(ucProfile); // Dùng ShowFunction cho gọn code
             }
             else
             {
                 MessageBox.Show("Không tìm thấy thông tin tài khoản!");
             }
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            // Có thể bỏ trống nếu không sử dụng
         }
     }
 }

@@ -140,6 +140,7 @@
             btnPostWatch.TabIndex = 8;
             btnPostWatch.Text = "Xem\r\nbản tin\r\n";
             btnPostWatch.UseVisualStyleBackColor = false;
+            btnPostWatch.Click += btnPostWatch_Click;
             btnPostWatch.MouseEnter += btnNav_MouseEnter;
             btnPostWatch.MouseLeave += btnNav_MouseLeave;
             // 
