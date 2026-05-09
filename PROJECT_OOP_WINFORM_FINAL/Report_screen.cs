@@ -23,9 +23,17 @@ namespace PROJECT_OOP_WINFORM_FINAL
             InitializeComponent();
         }
 
+        private void ShowFunction(UserControl uc)
+        {
+            panel2.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            panel2.Controls.Add(uc);
+            uc.BringToFront();
+        }
+
         public Report_screen(PublicationManager pubManager, Person user)
         {
-            InitializeComponent(); 
+            InitializeComponent();
             this._pubManager = pubManager;
             this._currentUser = user;
 
@@ -108,6 +116,15 @@ namespace PROJECT_OOP_WINFORM_FINAL
 
             panel2.Controls.Add(ucMyNews);
 
+        }
+
+        private void btnPostWatch_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender);
+
+            UC_NewsManager uc = new UC_NewsManager(this._pubManager, this._currentUser);
+
+            ShowFunction(uc);
         }
     }
 }

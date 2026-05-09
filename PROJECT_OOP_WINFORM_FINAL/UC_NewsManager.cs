@@ -8,16 +8,21 @@ namespace PROJECT_OOP_WINFORM_FINAL
     public partial class UC_NewsManager : UserControl
     {
         private PublicationManager _pubManager;
+        private Person _currentUser; // Thêm biến lưu người dùng hiện tại
 
-        public UC_NewsManager(PublicationManager pMgr)
+        // Hàm khởi tạo mới nhận thêm đối tượng Person
+        public UC_NewsManager(PublicationManager pMgr, Person currentUser)
         {
             InitializeComponent();
             this._pubManager = pMgr;
+            this._currentUser = currentUser;
 
+            // Khởi tạo các giá trị mặc định cho giao diện
             this.btnApprove.Visible = false;
             this.btnCloseContent.Visible = false;
             this.btnDelete.Visible = false;
             this.rtbContent.Visible = false;
+
             this.cbFilter.Items.Add("Tất cả loại tin");
             this.cbFilter.Items.Add("Tin khẩn cấp (Phát ngay)");
             this.cbFilter.Items.Add("Tin thường nhật");
@@ -32,12 +37,8 @@ namespace PROJECT_OOP_WINFORM_FINAL
             this.cbTimeFilter.Items.Add("Sắp phát sóng (Tương lai)");
             this.cbTimeFilter.SelectedIndex = 0;
 
-            if (this._pubManager.GetPostList().Count == 0)
-            {
-                this.CreateSampleData();
-            }
-
-            this.LoadData(this._pubManager.GetPostList());
+            // Nạp dữ liệu ban đầu
+            this.btnFilter_Click(null, null); // Gọi bộ lọc để lấy dữ liệu đúng quyền
         }
 
         private void LoadData(List<Publication> dataList)
@@ -46,10 +47,12 @@ namespace PROJECT_OOP_WINFORM_FINAL
             this.dgvNews.DataSource = dataList;
             this.dgvNews.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
+            // Ẩn các cột không cần thiết
             if (this.dgvNews.Columns["Id"] != null) this.dgvNews.Columns["Id"].Visible = false;
             if (this.dgvNews.Columns["PublishDate"] != null) this.dgvNews.Columns["PublishDate"].Visible = false;
             if (this.dgvNews.Columns["ViewCount"] != null) this.dgvNews.Columns["ViewCount"].Visible = false;
 
+            // Định dạng các cột hiển thị
             if (this.dgvNews.Columns["Title"] != null)
             {
                 this.dgvNews.Columns["Title"].HeaderText = "Tên kịch bản / Bản tin";
@@ -61,10 +64,13 @@ namespace PROJECT_OOP_WINFORM_FINAL
                 this.dgvNews.Columns["AirTime"].DefaultCellStyle.Format = "HH:mm (dd/MM)";
                 this.dgvNews.Columns["AirTime"].FillWeight = 100;
             }
+
+            // Xử lý cột IsApproved: Ẩn đi nếu không phải Admin
             if (this.dgvNews.Columns["IsApproved"] != null)
             {
                 this.dgvNews.Columns["IsApproved"].HeaderText = "Đã duyệt";
                 this.dgvNews.Columns["IsApproved"].FillWeight = 60;
+                this.dgvNews.Columns["IsApproved"].Visible = _currentUser is Admin;
             }
         }
 
@@ -73,22 +79,31 @@ namespace PROJECT_OOP_WINFORM_FINAL
             List<Publication> allPosts = this._pubManager.GetPostList();
             List<Publication> filteredList = new List<Publication>();
 
-            string selectedType = this.cbFilter.SelectedItem.ToString();
-            string selectedTime = this.cbTimeFilter.SelectedItem.ToString();
+            string selectedType = this.cbFilter.SelectedItem?.ToString() ?? "Tất cả loại tin";
+            string selectedTime = this.cbTimeFilter.SelectedItem?.ToString() ?? "Tất cả thời gian";
             DateTime now = DateTime.Now;
 
             for (int i = 0; i < allPosts.Count; i = i + 1)
             {
                 Publication p = allPosts[i];
+
+                // Lọc theo quyền: Nếu KHÔNG phải Admin, chỉ hiển thị bài ĐÃ DUYỆT
+                if (!(_currentUser is Admin) && !p.IsApproved)
+                {
+                    continue;
+                }
+
                 bool matchType = false;
                 bool matchTime = false;
 
+                // Lọc loại tin
                 if (selectedType == "Tất cả loại tin") matchType = true;
                 else if (selectedType == "Tin khẩn cấp (Phát ngay)" && p is BreakingNews) matchType = true;
                 else if (selectedType == "Tin thường nhật" && p is DailyNews && !(p is BreakingNews)) matchType = true;
                 else if (selectedType == "Phóng sự Video" && p is VideoReport) matchType = true;
                 else if (selectedType == "Tạp chí truyền hình" && p is WeeklyMagazine) matchType = true;
 
+                // Lọc thời gian
                 if (selectedTime == "Tất cả thời gian") matchTime = true;
                 else if (selectedTime == "Phát sóng hôm nay" && p.AirTime.Date == now.Date) matchTime = true;
                 else if (selectedTime == "Phát sóng ngày mai" && p.AirTime.Date == now.AddDays(1).Date) matchTime = true;
@@ -103,18 +118,28 @@ namespace PROJECT_OOP_WINFORM_FINAL
 
             this.LoadData(filteredList);
 
+            // Đóng khung hiển thị nội dung khi lọc lại dữ liệu
             this.rtbContent.Visible = false;
             this.btnCloseContent.Visible = false;
+            this.btnApprove.Visible = false;
+            this.btnDelete.Visible = false;
         }
 
         private void dgvNews_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && this.dgvNews.CurrentRow != null)
             {
-               this.btnApprove.Visible = true;
-                this.btnCloseContent.Visible=true;
-                this.btnDelete.Visible = true;
-                this.rtbContent.Visible=true;
+                // Hiển thị khung đọc nội dung
+                this.btnCloseContent.Visible = true;
+                this.rtbContent.Visible = true;
+
+                // Hiển thị nút Duyệt và Xoá NẾU LÀ ADMIN
+                if (_currentUser is Admin)
+                {
+                    this.btnApprove.Visible = true;
+                    this.btnDelete.Visible = true;
+                }
+
                 string id = this.dgvNews.CurrentRow.Cells["Id"].Value.ToString();
                 List<Publication> allPosts = this._pubManager.GetPostList();
                 Publication selected = null;
@@ -157,6 +182,12 @@ namespace PROJECT_OOP_WINFORM_FINAL
                         info += "[TẠP CHÍ TRUYỀN HÌNH CUỐI TUẦN]\nBiên tập viên/Tác giả: " + wm.Author + "\n";
                         info += "Tài liệu/Hình ảnh tham chiếu: " + (wm.References.Count > 0 ? wm.References[0] : "Lấy từ kho tư liệu số") + "\n";
                     }
+
+                    // Thêm phần nội dung chính
+                    info += "\n[NỘI DUNG/KỊCH BẢN CHI TIẾT]\n";
+                    // Ghi chú: Nếu class Publication có thuộc tính Content thì mở dòng dưới
+                    // info += selected.Content + "\n"; 
+
                     this.rtbContent.Text = info;
                 }
             }
@@ -171,37 +202,22 @@ namespace PROJECT_OOP_WINFORM_FINAL
             this.rtbContent.Clear();
         }
 
-        private void CreateSampleData()
-        {
-            DailyNews news1 = new DailyNews("DN01", "Bản tin Thời sự 19h: Đẩy mạnh xuất khẩu nông sản", DateTime.Now, 8);
-            news1.AirTime = DateTime.Today.AddHours(19);
-            news1.IsApproved = true;
-            this._pubManager.AddPost(news1);
-
-            BreakingNews news2 = new BreakingNews("BN01", "BẢN TIN CHỚP NHOÁNG: Ùn tắc nghiêm trọng tại cửa ngõ", DateTime.Now, 10);
-            news2.AirTime = DateTime.Now.AddMinutes(-30);
-            news2.Confirm();
-            this._pubManager.AddPost(news2);
-
-            VideoReport news3 = new VideoReport("VR01", "Phóng sự: Những người gác rừng thầm lặng", DateTime.Now, 15.5, "Full HD");
-            news3.AirTime = DateTime.Today.AddDays(1).AddHours(20);
-            this._pubManager.AddPost(news3);
-
-            WeeklyMagazine news4 = new WeeklyMagazine("WM01", "Tạp chí Kinh tế và Hội nhập", DateTime.Now, "BTV Hoài Anh");
-            news4.AddReference("Nguồn số liệu: Tổng cục Thống kê");
-            news4.AirTime = DateTime.Today.AddDays(2).AddHours(9);
-            this._pubManager.AddPost(news4);
-        }
-
         private void btnApprove_Click(object sender, EventArgs e)
         {
             if (this.dgvNews.CurrentRow != null)
             {
                 string id = this.dgvNews.CurrentRow.Cells["Id"].Value.ToString();
-                if (this._pubManager.ApprovePost(id))
+
+                List<Publication> allPosts = this._pubManager.GetPostList();
+                for (int i = 0; i < allPosts.Count; i++)
                 {
-                    MessageBox.Show("Duyệt kịch bản thành công! Sẵn sàng lên sóng.");
-                    this.btnFilter_Click(sender, e);
+                    if (allPosts[i].Id == id)
+                    {
+                        allPosts[i].IsApproved = true;
+                        MessageBox.Show("Duyệt kịch bản thành công! Sẵn sàng lên sóng.");
+                        this.btnFilter_Click(sender, e);
+                        break;
+                    }
                 }
             }
         }
@@ -213,19 +229,18 @@ namespace PROJECT_OOP_WINFORM_FINAL
                 string id = this.dgvNews.CurrentRow.Cells["Id"].Value.ToString();
                 if (MessageBox.Show("Bạn có chắc chắn muốn gỡ bản tin này khỏi lịch phát sóng?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    if (this._pubManager.RemovePost(id))
-                    {
-                        this.btnFilter_Click(sender, e);
-                        this.rtbContent.Visible = false;
-                        this.btnCloseContent.Visible = false;
-                    }
+                    this._pubManager.RemovePost(id); 
+                    this.btnFilter_Click(sender, e);
+                    this.rtbContent.Visible = false;
+                    this.btnCloseContent.Visible = false;
+                    this.btnApprove.Visible = false;
+                    this.btnDelete.Visible = false;
                 }
             }
         }
 
         private void rtbContent_TextChanged(object sender, EventArgs e)
         {
-
         }
     }
 }
