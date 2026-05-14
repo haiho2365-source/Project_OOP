@@ -126,6 +126,7 @@
             // UC_UserManagement
             // 
             AutoScaleMode = AutoScaleMode.None;
+            BackColor = Color.White;
             Controls.Add(btnEdit);
             Controls.Add(btnDelete);
             Controls.Add(label3);
