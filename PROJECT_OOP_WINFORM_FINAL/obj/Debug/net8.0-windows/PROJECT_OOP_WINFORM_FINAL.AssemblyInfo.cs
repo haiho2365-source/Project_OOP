@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PROJECT_OOP_WINFORM_FINAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a61cb9c98142e07d5e7d2a388bc23c9a468079fd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+500cdc0b5f158d9a997199e6b389fae94bbe1792")]
 [assembly: System.Reflection.AssemblyProductAttribute("PROJECT_OOP_WINFORM_FINAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PROJECT_OOP_WINFORM_FINAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

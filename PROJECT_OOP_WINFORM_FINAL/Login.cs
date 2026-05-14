@@ -146,7 +146,13 @@ namespace PROJECT_OOP_WINFORM_FINAL
                     }
                     else if (_selectedRole == 3)
                     {
-                        // Sau này bạn làm Form cho Độc giả thì thêm code mở form ở đây
+                        User frmUser = new User(this._database, this._userManager, this._pubManager, userFound);
+
+                        this.Hide();
+
+                        frmUser.ShowDialog();
+
+                        this.Show();
                     }
                 }
                 else
