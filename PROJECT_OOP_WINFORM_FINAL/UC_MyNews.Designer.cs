@@ -39,18 +39,18 @@
             // 
             dgvMyPosts.BackgroundColor = Color.White;
             dgvMyPosts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvMyPosts.Location = new Point(0, 100);
+            dgvMyPosts.Location = new Point(0, 43);
             dgvMyPosts.Name = "dgvMyPosts";
             dgvMyPosts.ReadOnly = true;
             dgvMyPosts.RowHeadersWidth = 62;
-            dgvMyPosts.Size = new Size(1043, 509);
+            dgvMyPosts.Size = new Size(1043, 566);
             dgvMyPosts.TabIndex = 1;
             dgvMyPosts.CellClick += dgvMyNews_CellClick;
             // 
             // btnAdd
             // 
             btnAdd.BackColor = Color.White;
-            btnAdd.Location = new Point(0, 60);
+            btnAdd.Location = new Point(0, 3);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(112, 34);
             btnAdd.TabIndex = 2;
@@ -61,7 +61,7 @@
             // btnEdit
             // 
             btnEdit.BackColor = Color.White;
-            btnEdit.Location = new Point(118, 60);
+            btnEdit.Location = new Point(118, 3);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(112, 34);
             btnEdit.TabIndex = 3;
@@ -71,7 +71,7 @@
             // btnDelete
             // 
             btnDelete.BackColor = Color.White;
-            btnDelete.Location = new Point(236, 60);
+            btnDelete.Location = new Point(236, 3);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(112, 34);
             btnDelete.TabIndex = 4;

@@ -8,21 +8,19 @@ namespace PROJECT_OOP_WINFORM_FINAL
     public partial class UC_NewsManager : UserControl
     {
         private PublicationManager _pubManager;
-        private Person _currentUser; 
+        private Person _currentUser;
 
-      
         public UC_NewsManager(PublicationManager pMgr, Person currentUser)
         {
             InitializeComponent();
             this._pubManager = pMgr;
             this._currentUser = currentUser;
 
-            
             this.btnApprove.Visible = false;
             this.btnCloseContent.Visible = false;
             this.btnDelete.Visible = false;
             this.rtbContent.Visible = false;
-            this.btnWatch.Visible = false; 
+            this.btnWatch.Visible = false;
 
             this.cbFilter.Items.Add("Tất cả loại tin");
             this.cbFilter.Items.Add("Tin khẩn cấp (Phát ngay)");
@@ -38,8 +36,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
             this.cbTimeFilter.Items.Add("Sắp phát sóng (Tương lai)");
             this.cbTimeFilter.SelectedIndex = 0;
 
-           
-            this.btnFilter_Click(null, null); 
+            this.btnFilter_Click(null, null);
         }
 
         private void LoadData(List<Publication> dataList)
@@ -150,10 +147,10 @@ namespace PROJECT_OOP_WINFORM_FINAL
 
                 if (selected != null)
                 {
-                    string info = "CHI TIẾT BẢN TIN";
-                    info += "Tiêu đề: " + selected.Title + "";
-                    info += "Lịch phát: " + selected.AirTime.ToString("HH:mm dd/MM/yyyy") + "";
-                    info += "NỘI DUNG KỊCH BẢN:" + selected.Content;
+                    string info = "CHI TIẾT BẢN TIN" + Environment.NewLine;
+                    info += "Tiêu đề: " + selected.Title + Environment.NewLine;
+                    info += "Lịch phát: " + selected.AirTime.ToString("HH:mm dd/MM/yyyy") + Environment.NewLine;
+                    info += "NỘI DUNG KỊCH BẢN:" + Environment.NewLine + selected.Content;
 
                     this.rtbContent.Text = info;
                 }
@@ -213,7 +210,6 @@ namespace PROJECT_OOP_WINFORM_FINAL
 
         private void dgvNews_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void btnWatch_Click(object sender, EventArgs e)
@@ -253,23 +249,18 @@ namespace PROJECT_OOP_WINFORM_FINAL
                 MessageBox.Show("Vui lòng chọn bản tin!");
             }
         }
-      
+
         private void LoadNewsToGrid()
         {
-            
             dgvNews.Rows.Clear();
 
-            
             List<Publication> allPosts = _pubManager.GetPostList();
 
             foreach (Publication p in allPosts)
             {
-               
                 if (p.IsApproved == true)
                 {
-                    
                     dgvNews.Rows.Add(p.Id, p.Title, p.PublishDate.ToString("dd/MM/yyyy"), p.ViewCount);
-
                 }
             }
         }
