@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Project_OOP
-{
+{ 
     [Serializable]
     public class BreakingNews : DailyNews
     {
