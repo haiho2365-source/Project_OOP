@@ -23,12 +23,15 @@ namespace PROJECT_OOP_WINFORM_FINAL
             InitializeComponent();
         }
 
-        private void ShowFunction(UserControl uc)
+        private void ShowFunction(Form form)
         {
             panel2.Controls.Clear();
-            uc.Dock = DockStyle.Fill;
-            panel2.Controls.Add(uc);
-            uc.BringToFront();
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+            panel2.Controls.Add(form);
+            form.Show();
+            form.BringToFront();
         }
 
         public Report_screen(PublicationManager pubManager, Person user)
@@ -130,9 +133,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
         {
             ActivateButton(sender);
 
-            UC_NewsManager uc = new UC_NewsManager(this._pubManager, this._currentUser);
-
-            ShowFunction(uc);
+            ShowFunction(new GUI.NewsManager(this._pubManager, this._currentUser));
         }
     }
 }

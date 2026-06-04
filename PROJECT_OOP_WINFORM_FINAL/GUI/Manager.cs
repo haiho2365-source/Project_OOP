@@ -23,12 +23,15 @@ namespace PROJECT_OOP_WINFORM_FINAL
             this._currentUser = currentUser; 
         }
 
-        private void ShowFunction(UserControl uc)
+        private void ShowFunction(Form form)
         {
             panel2.Controls.Clear();
-            uc.Dock = DockStyle.Fill;
-            panel2.Controls.Add(uc);
-            uc.BringToFront();
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+            panel2.Controls.Add(form);
+            form.Show();
+            form.BringToFront();
         }
 
         private void ActivateButton(object btnSender)
@@ -76,16 +79,14 @@ namespace PROJECT_OOP_WINFORM_FINAL
         private void btnUserMgr_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
-            ShowFunction(new UC_UserManagement(_userManager));
+            ShowFunction(new GUI.UserManagement(_userManager));
         }
 
         private void btnPostMgr_Click(object sender, EventArgs e)
         {
             ActivateButton(sender);
 
-            UC_NewsManager uc = new UC_NewsManager(this._pubManager, this._currentUser);
-
-            ShowFunction(uc);
+            ShowFunction(new GUI.NewsManager(this._pubManager, this._currentUser));
         }
 
         private void btnProfile_Click(object sender, EventArgs e)

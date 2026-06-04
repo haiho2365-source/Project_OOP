@@ -27,12 +27,15 @@ namespace PROJECT_OOP_WINFORM_FINAL
                 this.Text = "Kênh Đọc Tin Tức - Xin chào " + _currentUser.FullName;
         }
 
-        private void ShowFunction(UserControl uc)
+        private void ShowFunction(Form form)
         {
             panel2.Controls.Clear();
-            uc.Dock = DockStyle.Fill;
-            panel2.Controls.Add(uc);
-            uc.BringToFront();
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+            panel2.Controls.Add(form);
+            form.Show();
+            form.BringToFront();
         }
 
         private void ActivateButton(object btnSender)
@@ -59,8 +62,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
         {
             ActivateButton(sender);
 
-            UC_NewsManager ucNews = new UC_NewsManager(this._pubManager, this._currentUser);
-            ShowFunction(ucNews);
+            ShowFunction(new GUI.NewsManager(this._pubManager, this._currentUser));
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
