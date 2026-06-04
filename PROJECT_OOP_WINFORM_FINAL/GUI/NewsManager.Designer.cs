@@ -2,15 +2,8 @@
 {
     partial class NewsManager
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,12 +13,7 @@
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             btnApprove = new Button();
@@ -40,9 +28,6 @@
             btnWatch = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvNews).BeginInit();
             SuspendLayout();
-            // 
-            // btnApprove
-            // 
             btnApprove.BackColor = Color.FromArgb(76, 175, 80);
             btnApprove.FlatStyle = FlatStyle.Flat;
             btnApprove.ForeColor = Color.White;
@@ -53,9 +38,6 @@
             btnApprove.Text = "Duyệt";
             btnApprove.UseVisualStyleBackColor = false;
             btnApprove.Click += btnApprove_Click;
-            // 
-            // btnDelete
-            // 
             btnDelete.BackColor = Color.FromArgb(198, 40, 40);
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.ForeColor = Color.White;
@@ -66,9 +48,6 @@
             btnDelete.Text = "Xoá";
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
-            // 
-            // dgvNews
-            // 
             dgvNews.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvNews.BackgroundColor = Color.White;
             dgvNews.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -80,9 +59,6 @@
             dgvNews.TabIndex = 10;
             dgvNews.CellClick += dgvNews_CellClick;
             dgvNews.CellContentClick += dgvNews_CellContentClick;
-            // 
-            // rtbContent
-            // 
             rtbContent.BackColor = Color.White;
             rtbContent.Location = new Point(243, 58);
             rtbContent.Name = "rtbContent";
@@ -91,17 +67,11 @@
             rtbContent.TabIndex = 19;
             rtbContent.Text = "";
             rtbContent.TextChanged += rtbContent_TextChanged;
-            // 
-            // cbFilter
-            // 
             cbFilter.FormattingEnabled = true;
             cbFilter.Location = new Point(1, 1);
             cbFilter.Name = "cbFilter";
             cbFilter.Size = new Size(286, 36);
             cbFilter.TabIndex = 21;
-            // 
-            // btnFilter
-            // 
             btnFilter.BackColor = Color.White;
             btnFilter.FlatStyle = FlatStyle.Flat;
             btnFilter.Location = new Point(587, 3);
@@ -111,9 +81,6 @@
             btnFilter.Text = "Lọc";
             btnFilter.UseVisualStyleBackColor = false;
             btnFilter.Click += btnFilter_Click;
-            // 
-            // btnCloseContent
-            // 
             btnCloseContent.BackColor = Color.FromArgb(255, 112, 67);
             btnCloseContent.FlatStyle = FlatStyle.Flat;
             btnCloseContent.ForeColor = Color.White;
@@ -124,17 +91,11 @@
             btnCloseContent.Text = "Đóng";
             btnCloseContent.UseVisualStyleBackColor = false;
             btnCloseContent.Click += btnCloseContent_Click;
-            // 
-            // cbTimeFilter
-            // 
             cbTimeFilter.FormattingEnabled = true;
             cbTimeFilter.Location = new Point(293, 1);
             cbTimeFilter.Name = "cbTimeFilter";
             cbTimeFilter.Size = new Size(288, 36);
             cbTimeFilter.TabIndex = 24;
-            // 
-            // btnWatch
-            // 
             btnWatch.BackColor = Color.FromArgb(0, 114, 118);
             btnWatch.FlatStyle = FlatStyle.Flat;
             btnWatch.ForeColor = Color.White;
@@ -145,9 +106,6 @@
             btnWatch.Text = "Xem Video";
             btnWatch.UseVisualStyleBackColor = false;
             btnWatch.Click += btnWatch_Click;
-            // 
-            // NewsManager
-            // 
             AutoScaleDimensions = new SizeF(11F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
@@ -167,7 +125,6 @@
             ResumeLayout(false);
         }
 
-        #endregion
 
         private Button btnApprove;
         private Button btnDelete;
