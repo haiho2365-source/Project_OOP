@@ -16,6 +16,9 @@
     <Compile Update="GUI\MyNews.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="GUI\NewsManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="GUI\Profile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -34,10 +37,10 @@
     <Compile Update="GUI\UC_Profile.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="GUI\UC_UserManagement.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="GUI\User.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GUI\UserManagement.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

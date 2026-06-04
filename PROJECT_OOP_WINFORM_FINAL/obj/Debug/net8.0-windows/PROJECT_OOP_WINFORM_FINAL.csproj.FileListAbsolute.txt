@@ -27,7 +27,6 @@ C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8
 C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.Manager.resources
 C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.User.resources
 C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.Report_screen.resources
-C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.UC_UserManagement.resources
 C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.UC_NewsManager.resources
 C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.UC_Profile.resources
 C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.Form_NewsEditor.resources
@@ -68,3 +67,14 @@ C:\Users\LENOVO\Desktop\desktop\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\
 C:\Users\LENOVO\Desktop\desktop\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.pdb
 C:\Users\LENOVO\Desktop\desktop\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.genruntimeconfig.cache
 C:\Users\LENOVO\Desktop\desktop\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\ref\PROJECT_OOP_WINFORM_FINAL.dll
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\bin\Debug\net8.0-windows\System.Data.SqlClient.dll
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\bin\Debug\net8.0-windows\runtimes\win-arm64\native\sni.dll
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\bin\Debug\net8.0-windows\runtimes\win-x64\native\sni.dll
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\bin\Debug\net8.0-windows\runtimes\win-x86\native\sni.dll
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\bin\Debug\net8.0-windows\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.GUI.MyNews.resources
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.GUI.NewsManager.resources
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.GUI.Profile.resources
+C:\Users\ADMIN\Source\Repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\PROJECT_OOP_WINFORM_FINAL.GUI.UserManagement.resources
+C:\Users\ADMIN\source\repos\Project_OOP\PROJECT_OOP_WINFORM_FINAL\obj\Debug\net8.0-windows\UserManager.resources

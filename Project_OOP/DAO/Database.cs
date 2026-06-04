@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Data.SqlClient;
 
 namespace Project_OOP
 {
     [Serializable]
     public class Database
     {
-        private List<Subscriber> _subscribers;
-        private List<Admin> _admins;
-
+        private List<Subscriber> _subscribers = new List<Subscriber>();
+        private List<Admin> _admins = new List<Admin>();
         private DataStorageUtility _storage = new DataStorageUtility();
-        private string _filePath = "user_accounts.xml";
+        private string _connectionString = "Server=.;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
 
         public Database()
         {
-            this._subscribers = new List<Subscriber>();
-            this._admins = new List<Admin>();
-            LoadFromFile();
+            LoadFromDatabase();
         }
 
         public List<Subscriber> Subscribers
@@ -35,40 +32,78 @@ namespace Project_OOP
         public void AddSubscriber(Subscriber subscriber)
         {
             this._subscribers.Add(subscriber);
-            SaveToFile(); 
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                string query = "INSERT INTO Users (Id, FullName, Email, IsPremium, Password, Role) VALUES (@Id, @FullName, @Email, @IsPremium, @Password, 'Subscriber')";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", subscriber.Id);
+                    cmd.Parameters.AddWithValue("@FullName", subscriber.FullName);
+                    cmd.Parameters.AddWithValue("@Email", subscriber.Email);
+                    cmd.Parameters.AddWithValue("@IsPremium", subscriber.IsPremium);
+                    cmd.Parameters.AddWithValue("@Password", subscriber.Password);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void AddAdmin(Admin admin)
         {
             this._admins.Add(admin);
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                string query = "INSERT INTO Users (Id, FullName, Email, Password, Role) VALUES (@Id, @FullName, @Email, @Password, 'Admin')";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", admin.Id);
+                    cmd.Parameters.AddWithValue("@FullName", admin.FullName);
+                    cmd.Parameters.AddWithValue("@Email", admin.Email);
+                    cmd.Parameters.AddWithValue("@Password", admin.Password);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public bool IsEmailExists(string email)
         {
-            int i;
-            for (i = 0; i < this._subscribers.Count; i = i + 1)
+            using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                if (this._subscribers[i].Email == email)
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT COUNT(1) FROM Users WHERE Email = @Email", conn))
                 {
-                    return true;
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    return (int)cmd.ExecuteScalar() > 0;
                 }
             }
-            return false;
         }
 
-        public void SaveToFile()
+        private void LoadFromDatabase()
         {
-            _storage.SaveData<List<Subscriber>>(this._subscribers, _filePath);
-        }
-
-        private void LoadFromFile()
-        {
-            if (File.Exists(_filePath))
+            using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                List<Subscriber> loadedUsers = _storage.LoadData<List<Subscriber>>(_filePath);
-                if (loadedUsers != null)
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE Role = 'Subscriber'", conn))
                 {
-                    this._subscribers = loadedUsers;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            bool isPremium = reader["IsPremium"] != DBNull.Value && Convert.ToBoolean(reader["IsPremium"]);
+                            _subscribers.Add(new Subscriber(reader["Id"].ToString(), reader["FullName"].ToString(), reader["Email"].ToString(), isPremium, reader["Password"].ToString()));
+                        }
+                    }
+                }
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE Role = 'Admin'", conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            _admins.Add(new Admin(reader["Id"].ToString(), reader["FullName"].ToString(), reader["Email"].ToString(), reader["Password"].ToString(), reader["Role"].ToString()));
+                        }
+                    }
                 }
             }
         }

@@ -7,16 +7,26 @@ namespace PROJECT_OOP_WINFORM_FINAL
 {
     public partial class Login : Form
     {
-        private Database _database = new Database();
+        private Database _database;
         private UserManager _userManager;
         private int _selectedRole = 0;
-        private PublicationManager _pubManager = new PublicationManager();
+        private PublicationManager _pubManager;
 
         public Login()
         {
-            InitializeComponent();
-            _userManager = new UserManager();
-            InitializeMockData();
+            try
+            {
+                InitializeComponent();
+                _database = new Database();
+                _userManager = new UserManager();
+                _pubManager = new PublicationManager();
+                InitializeMockData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Lỗi Kết Nối Hệ Thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
         }
 
         private void InitializeMockData()

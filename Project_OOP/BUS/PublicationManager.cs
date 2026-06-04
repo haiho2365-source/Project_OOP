@@ -1,66 +1,106 @@
 ﻿using Project_OOP;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 public class PublicationManager
 {
     private List<Publication> _postList;
+    private string _connectionString = "Server=.;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
 
     public PublicationManager()
     {
         this._postList = new List<Publication>();
-
-        SeedData();
+        LoadFromDatabase();
     }
 
-    private void SeedData()
+    private void LoadFromDatabase()
     {
-        DailyNews tin1 = new DailyNews("T001", "Bản tin thời sự Bắt khẩn cấp cựu tuyển thủ hành hung côn đồ trọng tài ngay trên sân cỏ", DateTime.Now, 5);
-        tin1.Content = "Bản tin thời sự";
-        tin1.IsApproved = false;
-        tin1.VideoUrl = "https://drive.google.com/file/d/1B6bcWgvoB-lRyWiZkXUMGNa63U5N4Lty/view?usp=drive_link";
-        this._postList.Add(tin1);
+        using (SqlConnection conn = new SqlConnection(_connectionString))
+        {
+            conn.Open();
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Publications", conn))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string id = reader["Id"].ToString();
+                        string title = reader["Title"].ToString();
+                        DateTime publishDate = Convert.ToDateTime(reader["PublishDate"]);
+                        bool isApproved = Convert.ToBoolean(reader["IsApproved"]);
+                        string content = reader["Content"].ToString();
+                        string videoUrl = reader["VideoUrl"].ToString();
+                        string type = reader["Type"].ToString();
 
-        DailyNews tin4 = new DailyNews("T002", "Bản tin thời sự sáng Thông tin cực nóng kẻ cướp tiệm vàng mùng 1 Tết đang được cả nước truy tìm", DateTime.Now, 5);
-        tin4.Content = "Bản tin thời sự";
-        tin4.IsApproved = true;
-        tin4.VideoUrl = "https://drive.google.com/file/d/1KWhJi_monf1txD-grc8HkXxmQN6SdTcT/view?usp=drive_link";
-        this._postList.Add(tin4);
+                        Publication p = null;
+                        if (type == "DailyNews")
+                        {
+                            int trend = reader["TrendLevel"] != DBNull.Value ? Convert.ToInt32(reader["TrendLevel"]) : 0;
+                            p = new DailyNews(id, title, publishDate, trend);
+                        }
+                        else if (type == "BreakingNews")
+                        {
+                            int trend = reader["TrendLevel"] != DBNull.Value ? Convert.ToInt32(reader["TrendLevel"]) : 0;
+                            p = new BreakingNews(id, title, publishDate, trend);
+                        }
+                        else if (type == "VideoReport")
+                        {
+                            string resolution = reader["Resolution"].ToString();
+                            p = new VideoReport(id, title, publishDate, 0, resolution);
+                        }
+                        else if (type == "WeeklyMagazine")
+                        {
+                            string author = reader["Author"].ToString();
+                            p = new WeeklyMagazine(id, title, publishDate, author);
+                        }
 
-        DailyNews tin5 = new DailyNews("T003", "Làn sóng A.I thúc đẩy ngành bán dẫn | Thế giới 24h", DateTime.Now, 5);
-        tin5.Content = "Bản tin thời sự";
-        tin5.IsApproved = true;
-        tin5.VideoUrl = "https://drive.google.com/file/d/1ojpumkFa4VstLPsrjJjnxGy5phPzpiTs/view?usp=drive_link";
-        this._postList.Add(tin5);
-
-        VideoReport tin2 = new VideoReport("V001", "Bóc trần chiêu gọi hồn, áp vong, vòi tiền của bà thầy bói ở Thái Bình | VTV24", DateTime.Now, 100.0, "1080p");
-        tin2.Content = "Nội dung video phóng sự...";
-        tin2.VideoUrl = "https://drive.google.com/file/d/1yGXliJYZcV9g1ph8NKseqdNK45VszxHH/view?usp=drive_link";
-        tin2.IsApproved = true;
-        this._postList.Add(tin2);
-
-        VideoReport tin6 = new VideoReport("V002", "Cảnh báo tình trạng bắt cóc tống tiền người nước ngoài | VTV Times", DateTime.Now, 100.0, "1080p");
-        tin6.Content = "Nội dung video phóng sự...";
-        tin6.VideoUrl = "https://drive.google.com/file/d/1TXlVXSnOG3BgE5dw0Lm7bcfsilidsAd6/view?usp=drive_link";
-        tin6.IsApproved = true;
-        this._postList.Add(tin6);
-
-        BreakingNews tin3 = new BreakingNews("B002", "CẢNH BÁO NÓNG “Bom nước” sắp vỡ tung “uy hiếp” Bắc Bộ, Hà Nội đặc biệt chú ý 3 giờ tới  VietNamNet", DateTime.Now, 10);
-        tin3.Content = "Tin khẩn cấp.";
-        tin3.VideoUrl = "https://drive.google.com/file/d/13JAVuJSy7_-BzATK2GGiJbeTM_UULDd2/view?usp=drive_link";
-        tin3.IsApproved = false;
-        this._postList.Add(tin3);
-
-        BreakingNews tin7 = new BreakingNews("B001", "TIN BÃO KHẨN CẤP (Cơn bão số 11) 12h ngày 5/10", DateTime.Now, 10);
-        tin7.Content = "Tin khẩn cấp.";
-        tin7.VideoUrl = "https://drive.google.com/file/d/1gsiMx_wHCl2OHnK4SjwP4a5FmCBFFNrQ/view?usp=drive_link";
-        tin7.IsApproved = true;
-        this._postList.Add(tin7);
+                        if (p != null)
+                        {
+                            p.Content = content;
+                            p.VideoUrl = videoUrl;
+                            p.IsApproved = isApproved;
+                            _postList.Add(p);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void AddPost(Publication post)
     {
         this._postList.Add(post);
+        using (SqlConnection conn = new SqlConnection(_connectionString))
+        {
+            conn.Open();
+            string query = "INSERT INTO Publications (Id, Title, PublishDate, IsApproved, Content, VideoUrl, Type, TrendLevel, Resolution, Author) VALUES (@Id, @Title, @PublishDate, @IsApproved, @Content, @VideoUrl, @Type, @TrendLevel, @Resolution, @Author)";
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@Id", post.Id);
+                cmd.Parameters.AddWithValue("@Title", post.Title);
+                cmd.Parameters.AddWithValue("@PublishDate", post.PublishDate);
+                cmd.Parameters.AddWithValue("@IsApproved", post.IsApproved);
+                cmd.Parameters.AddWithValue("@Content", post.Content ?? "");
+                cmd.Parameters.AddWithValue("@VideoUrl", post.VideoUrl ?? "");
+
+                string type = "DailyNews";
+                object trend = DBNull.Value;
+                object resolution = DBNull.Value;
+                object author = DBNull.Value;
+
+                if (post is BreakingNews b) { type = "BreakingNews"; trend = b.TrendLevel; }
+                else if (post is DailyNews d) { type = "DailyNews"; trend = d.TrendLevel; }
+                else if (post is VideoReport v) { type = "VideoReport"; resolution = v.Resolution; }
+                else if (post is WeeklyMagazine w) { type = "WeeklyMagazine"; author = w.Author; }
+
+                cmd.Parameters.AddWithValue("@Type", type);
+                cmd.Parameters.AddWithValue("@TrendLevel", trend);
+                cmd.Parameters.AddWithValue("@Resolution", resolution);
+                cmd.Parameters.AddWithValue("@Author", author);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 
     public bool UnapprovePost(string id)
@@ -70,6 +110,15 @@ public class PublicationManager
             if (this._postList[i].Id == id)
             {
                 this._postList[i].IsApproved = false;
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("UPDATE Publications SET IsApproved = 0 WHERE Id = @Id", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", id);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
                 return true;
             }
         }
@@ -83,6 +132,15 @@ public class PublicationManager
             if (this._postList[i].Id == id)
             {
                 this._postList[i].IsApproved = true;
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("UPDATE Publications SET IsApproved = 1 WHERE Id = @Id", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", id);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
                 return true;
             }
         }
@@ -96,75 +154,23 @@ public class PublicationManager
             if (this._postList[i].Id == id)
             {
                 this._postList.RemoveAt(i);
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DELETE FROM Publications WHERE Id = @Id", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", id);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
                 return true;
             }
         }
         return false;
-    }
-
-    public void ShowAllPosts()
-    {
-        for (int i = 0; i < this._postList.Count; i = i + 1)
-        {
-            this._postList[i].DisplayContent();
-        }
     }
 
     public List<Publication> GetPostList()
     {
         return this._postList;
-    }
-
-    public void SetPostList(List<Publication> loadedList)
-    {
-        this._postList = loadedList;
-    }
-
-    public bool UpdatePost(string id, string newTitle, string content, string videoUrl, DateTime publishDate, string extraData)
-    {
-        for (int i = 0; i < this._postList.Count; i = i + 1)
-        {
-            if (this._postList[i].Id == id)
-            {
-                this._postList[i].Title = newTitle;
-                this._postList[i].Content = content;
-                this._postList[i].VideoUrl = videoUrl;
-                this._postList[i].PublishDate = publishDate;
-
-                Publication p = this._postList[i];
-
-                if (p is BreakingNews)
-                {
-                    BreakingNews breaking = (BreakingNews)p;
-                    int newTrend;
-                    if (int.TryParse(extraData, out newTrend) == true)
-                    {
-                        breaking.TrendLevel = newTrend;
-                    }
-                }
-                else if (p is DailyNews)
-                {
-                    DailyNews daily = (DailyNews)p;
-                    int newTrend;
-                    if (int.TryParse(extraData, out newTrend) == true)
-                    {
-                        daily.TrendLevel = newTrend;
-                    }
-                }
-                else if (p is VideoReport)
-                {
-                    VideoReport video = (VideoReport)p;
-                    video.Resolution = extraData;
-                }
-                else if (p is WeeklyMagazine)
-                {
-                    WeeklyMagazine magazine = (WeeklyMagazine)p;
-                    magazine.Author = extraData;
-                }
-
-                return true;
-            }
-        }
-        return false;
     }
 }
