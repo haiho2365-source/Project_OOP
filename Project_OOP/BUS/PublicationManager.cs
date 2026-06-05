@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 public class PublicationManager
 {
@@ -70,7 +71,11 @@ public class PublicationManager
 
     public void AddPost(Publication post)
     {
-        this._postList.Add(post);
+        if (post == null || string.IsNullOrWhiteSpace(post.Id)) return;
+
+        bool isExist = this._postList.Any(p => p.Id.Equals(post.Id.Trim(), StringComparison.OrdinalIgnoreCase));
+        if (isExist) return;
+
         using (SqlConnection conn = new SqlConnection(_connectionString))
         {
             conn.Open();
@@ -98,28 +103,35 @@ public class PublicationManager
                 cmd.Parameters.AddWithValue("@TrendLevel", trend);
                 cmd.Parameters.AddWithValue("@Resolution", resolution);
                 cmd.Parameters.AddWithValue("@Author", author);
-                cmd.ExecuteNonQuery();
+
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    this._postList.Add(post);
+                }
             }
         }
     }
 
     public bool UnapprovePost(string id)
     {
-        for (int i = 0; i < this._postList.Count; i = i + 1)
+        if (string.IsNullOrWhiteSpace(id)) return false;
+
+        Publication post = this._postList.FirstOrDefault(p => p.Id.Equals(id.Trim(), StringComparison.OrdinalIgnoreCase));
+        if (post == null) return false;
+
+        using (SqlConnection conn = new SqlConnection(_connectionString))
         {
-            if (this._postList[i].Id == id)
+            conn.Open();
+            using (SqlCommand cmd = new SqlCommand("UPDATE Publications SET IsApproved = 0 WHERE Id = @Id", conn))
             {
-                this._postList[i].IsApproved = false;
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                cmd.Parameters.AddWithValue("@Id", id.Trim());
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("UPDATE Publications SET IsApproved = 0 WHERE Id = @Id", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Id", id);
-                        cmd.ExecuteNonQuery();
-                    }
+                    post.IsApproved = false;
+                    return true;
                 }
-                return true;
             }
         }
         return false;
@@ -127,43 +139,47 @@ public class PublicationManager
 
     public bool ApprovePost(string id)
     {
-        for (int i = 0; i < this._postList.Count; i = i + 1)
+        if (string.IsNullOrWhiteSpace(id)) return false;
+
+        Publication post = this._postList.FirstOrDefault(p => p.Id.Equals(id.Trim(), StringComparison.OrdinalIgnoreCase));
+        if (post == null) return false;
+
+        using (SqlConnection conn = new SqlConnection(_connectionString))
         {
-            if (this._postList[i].Id == id)
+            conn.Open();
+            using (SqlCommand cmd = new SqlCommand("UPDATE Publications SET IsApproved = 1 WHERE Id = @Id", conn))
             {
-                this._postList[i].IsApproved = true;
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                cmd.Parameters.AddWithValue("@Id", id.Trim());
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("UPDATE Publications SET IsApproved = 1 WHERE Id = @Id", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Id", id);
-                        cmd.ExecuteNonQuery();
-                    }
+                    post.IsApproved = true;
+                    return true;
                 }
-                return true;
             }
         }
         return false;
-    }
+}
 
     public bool RemovePost(string id)
     {
-        for (int i = 0; i < this._postList.Count; i = i + 1)
+        if (string.IsNullOrWhiteSpace(id)) return false;
+
+        Publication post = this._postList.FirstOrDefault(p => p.Id.Equals(id.Trim(), StringComparison.OrdinalIgnoreCase));
+        if (post == null) return false;
+
+        using (SqlConnection conn = new SqlConnection(_connectionString))
         {
-            if (this._postList[i].Id == id)
+            conn.Open();
+            using (SqlCommand cmd = new SqlCommand("DELETE FROM Publications WHERE Id = @Id", conn))
             {
-                this._postList.RemoveAt(i);
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                cmd.Parameters.AddWithValue("@Id", id.Trim());
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("DELETE FROM Publications WHERE Id = @Id", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Id", id);
-                        cmd.ExecuteNonQuery();
-                    }
+                    this._postList.Remove(post);
+                    return true;
                 }
-                return true;
             }
         }
         return false;
