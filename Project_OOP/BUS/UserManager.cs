@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 public class UserManager
 {
@@ -53,11 +54,10 @@ public class UserManager
 
     public bool AddUser(Person newUser)
     {
-        for (int i = 0; i < this._userList.Count; i = i + 1)
-        {
-            if (this._userList[i].Id == newUser.Id) return false;
-        }
-        this._userList.Add(newUser);
+        if (newUser == null) return false;
+
+        bool exists = _userList.Any(u => u.Id.Equals(newUser.Id.Trim(), StringComparison.OrdinalIgnoreCase));
+        if (exists) return false;
 
         using (SqlConnection conn = new SqlConnection(_connectionString))
         {
@@ -96,29 +96,37 @@ public class UserManager
                 cmd.Parameters.AddWithValue("@Password", password);
                 cmd.Parameters.AddWithValue("@Department", dept);
                 cmd.Parameters.AddWithValue("@IsPremium", isPremium);
-                cmd.ExecuteNonQuery();
+
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    this._userList.Add(newUser);
+                    return true;
+                }
             }
         }
-        return true;
+        return false;
     }
 
     public bool DeleteUser(string id)
     {
-        for (int i = 0; i < this._userList.Count; i = i + 1)
+        if (string.IsNullOrWhiteSpace(id)) return false;
+
+        Person target = _userList.FirstOrDefault(u => u.Id.Equals(id.Trim(), StringComparison.OrdinalIgnoreCase));
+        if (target == null) return false;
+
+        using (SqlConnection conn = new SqlConnection(_connectionString))
         {
-            if (this._userList[i].Id == id)
+            conn.Open();
+            using (SqlCommand cmd = new SqlCommand("DELETE FROM Users WHERE Id = @Id", conn))
             {
-                this._userList.RemoveAt(i);
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                cmd.Parameters.AddWithValue("@Id", id.Trim());
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("DELETE FROM Users WHERE Id = @Id", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Id", id);
-                        cmd.ExecuteNonQuery();
-                    }
+                    this._userList.Remove(target);
+                    return true;
                 }
-                return true;
             }
         }
         return false;
@@ -126,24 +134,27 @@ public class UserManager
 
     public bool UpdateUser(string id, string newName, string newEmail)
     {
-        for (int i = 0; i < this._userList.Count; i = i + 1)
+        if (string.IsNullOrWhiteSpace(id)) return false;
+
+        Person target = _userList.FirstOrDefault(u => u.Id.Equals(id.Trim(), StringComparison.OrdinalIgnoreCase));
+        if (target == null) return false;
+
+        using (SqlConnection conn = new SqlConnection(_connectionString))
         {
-            if (this._userList[i].Id == id)
+            conn.Open();
+            using (SqlCommand cmd = new SqlCommand("UPDATE Users SET FullName = @FullName, Email = @Email WHERE Id = @Id", conn))
             {
-                this._userList[i].FullName = newName;
-                this._userList[i].Email = newEmail;
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                cmd.Parameters.AddWithValue("@FullName", newName ?? "");
+                cmd.Parameters.AddWithValue("@Email", newEmail ?? "");
+                cmd.Parameters.AddWithValue("@Id", id.Trim());
+
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("UPDATE Users SET FullName = @FullName, Email = @Email WHERE Id = @Id", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@FullName", newName);
-                        cmd.Parameters.AddWithValue("@Email", newEmail);
-                        cmd.Parameters.AddWithValue("@Id", id);
-                        cmd.ExecuteNonQuery();
-                    }
+                    target.FullName = newName;
+                    target.Email = newEmail;
+                    return true;
                 }
-                return true;
             }
         }
         return false;
