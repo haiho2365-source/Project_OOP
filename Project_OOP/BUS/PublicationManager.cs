@@ -1,4 +1,4 @@
-﻿using Project_OOP;
+﻿using Project_Desktop;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,8 +7,7 @@ using System.Linq;
 public class PublicationManager
 {
     private List<Publication> _postList;
-    private string _connectionString = "Server=MSI\\SQLEXPRESS;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
-
+    private string _connectionString = "Server=.;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
     public PublicationManager()
     {
         this._postList = new List<Publication>();

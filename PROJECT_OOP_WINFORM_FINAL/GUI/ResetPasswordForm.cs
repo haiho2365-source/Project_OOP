@@ -1,9 +1,9 @@
-using Project_OOP;
+using Project_Desktop;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PROJECT_OOP_WINFORM_FINAL.GUI
+namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public class ResetPasswordForm : Form
     {

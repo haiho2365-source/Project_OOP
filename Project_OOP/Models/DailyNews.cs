@@ -1,10 +1,10 @@
-using Project_OOP;
+using Project_Desktop;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
   
-namespace Project_OOP
+namespace Project_Desktop
 {
     [Serializable]
     public class DailyNews : Publication

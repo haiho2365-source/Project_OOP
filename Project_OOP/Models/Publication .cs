@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project_OOP
+namespace Project_Desktop
 {
     [Serializable]
     public abstract class Publication

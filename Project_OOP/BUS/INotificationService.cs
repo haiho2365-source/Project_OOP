@@ -1,5 +1,4 @@
-﻿using Project_OOP;
-
+﻿using Project_Desktop;
 public interface INotificationService
 {
   

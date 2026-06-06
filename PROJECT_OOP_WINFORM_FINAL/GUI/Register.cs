@@ -1,8 +1,8 @@
-﻿using Project_OOP;
+﻿using Project_Desktop;
 using System;
 using System.Windows.Forms;
 
-namespace PROJECT_OOP_WINFORM_FINAL
+namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public partial class Register : Form
     {

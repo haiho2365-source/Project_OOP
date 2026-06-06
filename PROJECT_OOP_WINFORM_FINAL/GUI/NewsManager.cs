@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Project_OOP;
+using Project_Desktop;
 
-namespace PROJECT_OOP_WINFORM_FINAL.GUI
+namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public partial class NewsManager : Form
     {

@@ -1,9 +1,9 @@
-﻿using Project_OOP;
+﻿using Project_Desktop;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PROJECT_OOP_WINFORM_FINAL
+namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public partial class User : Form
     {
@@ -96,7 +96,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
             {
                 panel2.Controls.Clear();
 
-                var frmProfile = new PROJECT_OOP_WINFORM_FINAL.GUI.Profile(this._currentUser);
+                var frmProfile = new PROJECT_DESKTOP_WINFORM_FINAL.GUI.Profile(this._currentUser);
                 frmProfile.TopLevel = false;
                 frmProfile.FormBorderStyle = FormBorderStyle.None;
                 frmProfile.Dock = DockStyle.Fill;

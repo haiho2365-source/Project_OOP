@@ -1,11 +1,11 @@
-using Project_OOP;
+using Project_Desktop;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace PROJECT_OOP_WINFORM_FINAL.GUI
+namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public class MailboxForm : Form
     {

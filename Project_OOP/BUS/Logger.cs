@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Project_OOP
+namespace Project_Desktop
 {
     public static class Logger
     {

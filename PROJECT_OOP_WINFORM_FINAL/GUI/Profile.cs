@@ -1,4 +1,4 @@
-﻿using Project_OOP;
+﻿using Project_Desktop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PROJECT_OOP_WINFORM_FINAL.GUI
+namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public partial class Profile : Form
     {

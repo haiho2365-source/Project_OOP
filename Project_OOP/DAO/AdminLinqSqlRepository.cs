@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace Project_OOP
+namespace Project_Desktop
 {
     public class AdminLinqSqlRepository
     {
-        private readonly string _connectionString = "Server=MSI\\SQLEXPRESS;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
-
+        private string _connectionString = "Server=.;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
         public bool TryResetPassword(string fullName, string email, string role, string newPassword)
         {
             List<DbUserRecord> users = LoadUsers();

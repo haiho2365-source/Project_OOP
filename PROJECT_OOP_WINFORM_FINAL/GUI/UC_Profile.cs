@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using Project_OOP; 
-namespace PROJECT_OOP_WINFORM_FINAL
+using Project_Desktop; 
+namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public partial class UC_Profile : UserControl
     {

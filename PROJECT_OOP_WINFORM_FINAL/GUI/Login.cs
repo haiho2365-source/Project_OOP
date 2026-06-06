@@ -1,11 +1,11 @@
-﻿using Project_OOP;
-using PROJECT_OOP_WINFORM_FINAL.GUI;
+﻿using Project_Desktop;
+using PROJECT_DESKTOP_WINFORM_FINAL.GUI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PROJECT_OOP_WINFORM_FINAL
+namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public partial class Login : Form
     {
@@ -78,7 +78,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
             Admin adminAccount = new Admin("AD01", "Admin User", "admin@ueh.edu.vn", "123456", "Manager");
             _userManager.AddUser(adminAccount);
 
-            Project_OOP.Reporter reporterAccount = new Project_OOP.Reporter("RP01", "Reporter User", "reporter@ueh.edu.vn", "News Dept", "123");
+            Project_Desktop.Reporter reporterAccount = new Project_Desktop.Reporter("RP01", "Reporter User", "reporter@ueh.edu.vn", "News Dept", "123");
             _userManager.AddUser(reporterAccount);
 
             if (_database.Subscribers != null)
@@ -153,7 +153,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
                 isPasswordCorrect = admin.CheckPassword(password);
                 userRoleName = "Quản trị viên";
             }
-            else if (userFound is Project_OOP.Reporter reporter)
+            else if (userFound is Project_Desktop.Reporter reporter)
             {
                 isPasswordCorrect = reporter.CheckPassword(password);
                 userRoleName = "Phóng viên";
@@ -167,7 +167,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
             if (isPasswordCorrect)
             {
                 bool isRightRole = (_selectedRole == 1 && userFound is Admin) ||
-                                   (_selectedRole == 2 && userFound is Project_OOP.Reporter) ||
+                                   (_selectedRole == 2 && userFound is Project_Desktop.Reporter) ||
                                    (_selectedRole == 3 && userFound is Subscriber);
 
                 if (isRightRole)

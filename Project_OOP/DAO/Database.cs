@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace Project_OOP
+namespace Project_Desktop
 {
     [Serializable]
     public class Database
@@ -10,8 +10,7 @@ namespace Project_OOP
         private List<Subscriber> _subscribers = new List<Subscriber>();
         private List<Admin> _admins = new List<Admin>();
         private DataStorageUtility _storage = new DataStorageUtility();
-        private string _connectionString = "Server=MSI\\SQLEXPRESS;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
-
+        private string _connectionString = "Server=.;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
         public Database()
         {
             LoadFromDatabase();

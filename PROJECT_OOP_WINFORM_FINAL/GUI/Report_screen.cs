@@ -1,4 +1,4 @@
-﻿using Project_OOP;
+﻿using Project_Desktop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PROJECT_OOP_WINFORM_FINAL
+namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public partial class Report_screen : Form
     {
@@ -122,7 +122,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
             {
                 panel2.Controls.Clear();
 
-                var frmProfile = new PROJECT_OOP_WINFORM_FINAL.GUI.Profile(this._currentUser);
+                var frmProfile = new PROJECT_DESKTOP_WINFORM_FINAL.GUI.Profile(this._currentUser);
                 frmProfile.TopLevel = false;
                 frmProfile.FormBorderStyle = FormBorderStyle.None;
                 frmProfile.Dock = DockStyle.Fill;
@@ -143,7 +143,7 @@ namespace PROJECT_OOP_WINFORM_FINAL
 
             panel2.Controls.Clear();
 
-            var frmMyNews = new PROJECT_OOP_WINFORM_FINAL.GUI.MyNews(this._pubManager, this._currentUser);
+            var frmMyNews = new PROJECT_DESKTOP_WINFORM_FINAL.GUI.MyNews(this._pubManager, this._currentUser);
             frmMyNews.TopLevel = false;
             frmMyNews.FormBorderStyle = FormBorderStyle.None;
             frmMyNews.Dock = DockStyle.Fill;

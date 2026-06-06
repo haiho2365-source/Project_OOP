@@ -1,4 +1,4 @@
-﻿namespace PROJECT_OOP_WINFORM_FINAL
+﻿namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     partial class User
     {

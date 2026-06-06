@@ -1,6 +1,6 @@
 using System;
 
-namespace Project_OOP
+namespace Project_Desktop
 {
     public class Advertisement
     {

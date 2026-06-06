@@ -1,7 +1,7 @@
-using global::Project_OOP;
+using global::Project_Desktop;
 using System;
 
-namespace Project_OOP
+namespace Project_Desktop
 {
     [Serializable]
     public class Admin : Person

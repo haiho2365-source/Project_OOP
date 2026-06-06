@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Project_OOP
+namespace Project_Desktop
 {
     [Serializable]
     public class Subscriber : Person
