@@ -7,7 +7,7 @@ using System.Linq;
 public class PublicationManager
 {
     private List<Publication> _postList;
-    private string _connectionString = "Server=LAPTOP-2C4LFE1O\\SQLEXPRESS;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
+    private string _connectionString = "Server=MSI\\SQLEXPRESS;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
 
     public PublicationManager()
     {
@@ -79,13 +79,15 @@ public class PublicationManager
         using (SqlConnection conn = new SqlConnection(_connectionString))
         {
             conn.Open();
-            string query = "INSERT INTO Publications (Id, Title, PublishDate, IsApproved, Content, VideoUrl, Type, TrendLevel, Resolution, Author) VALUES (@Id, @Title, @PublishDate, @IsApproved, @Content, @VideoUrl, @Type, @TrendLevel, @Resolution, @Author)";
+            string query = "INSERT INTO Publications (Id, Title, PublishDate, IsApproved, ViewCount, AirTime, Content, VideoUrl, Type, TrendLevel, Resolution, Author) VALUES (@Id, @Title, @PublishDate, @IsApproved, @ViewCount, @AirTime, @Content, @VideoUrl, @Type, @TrendLevel, @Resolution, @Author)";
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@Id", post.Id);
                 cmd.Parameters.AddWithValue("@Title", post.Title);
                 cmd.Parameters.AddWithValue("@PublishDate", post.PublishDate);
                 cmd.Parameters.AddWithValue("@IsApproved", post.IsApproved);
+                cmd.Parameters.AddWithValue("@ViewCount", post.ViewCount);
+                cmd.Parameters.AddWithValue("@AirTime", post.AirTime);
                 cmd.Parameters.AddWithValue("@Content", post.Content ?? "");
                 cmd.Parameters.AddWithValue("@VideoUrl", post.VideoUrl ?? "");
 
