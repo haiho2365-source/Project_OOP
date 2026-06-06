@@ -1,4 +1,4 @@
-﻿using Project_Desktop;
+using Project_Desktop;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -12,6 +12,8 @@ namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
         private PublicationManager _pubManager;
         private Person _currentUser;
         private Button _currentActiveButton;
+        private Button _btnMailbox = null!;
+        private Button _btnStatistics = null!;
 
         public Manager(Database db, UserManager uMgr, PublicationManager pMgr, Person currentUser)
         {
@@ -20,9 +22,43 @@ namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
             this._database = db;
             this._userManager = uMgr;
             this._pubManager = pMgr;
-            this._currentUser = currentUser; 
+            this._currentUser = currentUser;
+            InitializeAdminButtons();
         }
 
+
+        private void InitializeAdminButtons()
+        {
+            _btnMailbox = CreateNavButton("Hòm thư", btnProfile.Right + 6);
+            _btnMailbox.Click += btnMailbox_Click;
+
+            _btnStatistics = CreateNavButton("Báo cáo\r\nthống kê", _btnMailbox.Right + 6);
+            _btnStatistics.Click += btnStatistics_Click;
+
+            panel1.Controls.Add(_btnMailbox);
+            panel1.Controls.Add(_btnStatistics);
+            _btnMailbox.BringToFront();
+            _btnStatistics.BringToFront();
+        }
+
+        private Button CreateNavButton(string text, int left)
+        {
+            Button button = new Button();
+            button.BackColor = Color.FromArgb(0, 114, 118);
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatStyle = FlatStyle.Flat;
+            button.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button.ForeColor = Color.White;
+            button.Location = new Point(left, btnProfile.Top);
+            button.Padding = Padding.Empty;
+            button.Size = btnProfile.Size;
+            button.Text = text;
+            button.TextAlign = ContentAlignment.MiddleCenter;
+            button.UseVisualStyleBackColor = false;
+            button.MouseEnter += btnNav_MouseEnter;
+            button.MouseLeave += btnNav_MouseLeave;
+            return button;
+        }
         private void ShowFunction(Form form)
         {
             panel2.Controls.Clear();
@@ -117,6 +153,18 @@ namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
             this.Close();
         }
 
+
+        private void btnMailbox_Click(object? sender, EventArgs e)
+        {
+            ActivateButton(sender!);
+            ShowFunction(new MailboxForm(this._currentUser));
+        }
+
+        private void btnStatistics_Click(object? sender, EventArgs e)
+        {
+            ActivateButton(sender!);
+            ShowFunction(new AdminStatisticsForm());
+        }
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
         }

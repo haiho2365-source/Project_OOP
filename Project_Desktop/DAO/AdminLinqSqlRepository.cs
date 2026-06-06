@@ -7,7 +7,7 @@ namespace Project_Desktop
 {
     public class AdminLinqSqlRepository
     {
-        private string _connectionString = "Server=.;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
+        private string _connectionString = "Server=LAPTOP-2C4LFE1O\\SQLEXPRESS;Database=Project_Desktop;Trusted_Connection=True;TrustServerCertificate=True;";
         public bool TryResetPassword(string fullName, string email, string role, string newPassword)
         {
             List<DbUserRecord> users = LoadUsers();

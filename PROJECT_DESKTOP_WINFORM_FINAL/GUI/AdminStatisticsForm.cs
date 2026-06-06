@@ -1,5 +1,7 @@
+using Microsoft.Reporting.WinForms;
 using Project_Desktop;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,150 +9,85 @@ namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 {
     public class AdminStatisticsForm : Form
     {
+        private const string ReportResource = "PROJECT_DESKTOP_WINFORM_FINAL.Reports.AdminStatisticsReport.rdlc";
         private readonly AdminLinqSqlRepository _repository = new AdminLinqSqlRepository();
-        private Label lblTotalUsers = null!;
-        private Label lblTotalPosts = null!;
-        private Label lblApprovedPosts = null!;
-        private Label lblUnreadMessages = null!;
-        private DataGridView dgvUsersByRole = null!;
-        private DataGridView dgvPostsByType = null!;
-        private DataGridView dgvPostsByStatus = null!;
+        private ReportViewer reportViewer = null!;
         private Button btnRefresh = null!;
 
         public AdminStatisticsForm()
         {
             InitializeComponent();
-            LoadStatistics();
+            LoadReport();
         }
 
         private void InitializeComponent()
         {
+            Panel topPanel = new Panel();
             Label lblTitle = new Label();
-            Label lblUsersGrid = new Label();
-            Label lblTypesGrid = new Label();
-            Label lblStatusGrid = new Label();
-
-            this.lblTotalUsers = new Label();
-            this.lblTotalPosts = new Label();
-            this.lblApprovedPosts = new Label();
-            this.lblUnreadMessages = new Label();
-            this.dgvUsersByRole = new DataGridView();
-            this.dgvPostsByType = new DataGridView();
-            this.dgvPostsByStatus = new DataGridView();
             this.btnRefresh = new Button();
+            this.reportViewer = new ReportViewer();
 
-            ((System.ComponentModel.ISupportInitialize)this.dgvUsersByRole).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)this.dgvPostsByType).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)this.dgvPostsByStatus).BeginInit();
             this.SuspendLayout();
 
-            lblTitle.AutoSize = true;
+            topPanel.BackColor = Color.White;
+            topPanel.Dock = DockStyle.Top;
+            topPanel.Height = 54;
+
+            lblTitle.Dock = DockStyle.Left;
             lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(0, 114, 118);
-            lblTitle.Location = new Point(18, 15);
+            lblTitle.Padding = new Padding(18, 0, 0, 0);
+            lblTitle.Size = new Size(420, 54);
             lblTitle.Text = "BÁO CÁO THỐNG KÊ";
+            lblTitle.TextAlign = ContentAlignment.MiddleLeft;
 
-            ConfigureMetricLabel(this.lblTotalUsers, "Người dùng: 0", 18, 62);
-            ConfigureMetricLabel(this.lblTotalPosts, "Bài báo: 0", 250, 62);
-            ConfigureMetricLabel(this.lblApprovedPosts, "Đã duyệt: 0", 482, 62);
-            ConfigureMetricLabel(this.lblUnreadMessages, "Thư chưa đọc: 0", 714, 62);
-
-            ConfigureButton(this.btnRefresh, "LÀM MỚI", Color.FromArgb(255, 112, 67), 870, 15, 120, 38);
+            this.btnRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            this.btnRefresh.BackColor = Color.FromArgb(255, 112, 67);
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatStyle = FlatStyle.Flat;
+            this.btnRefresh.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            this.btnRefresh.ForeColor = Color.White;
+            this.btnRefresh.Location = new Point(870, 8);
+            this.btnRefresh.Size = new Size(132, 38);
+            this.btnRefresh.Text = "LÀM MỚI";
+            this.btnRefresh.UseVisualStyleBackColor = false;
             this.btnRefresh.Click += btnRefresh_Click;
 
-            ConfigureGridTitle(lblUsersGrid, "Người dùng theo vai trò", 18, 118);
-            ConfigureGridTitle(lblTypesGrid, "Bài báo theo loại", 348, 118);
-            ConfigureGridTitle(lblStatusGrid, "Trạng thái duyệt", 678, 118);
+            topPanel.Controls.Add(lblTitle);
+            topPanel.Controls.Add(this.btnRefresh);
 
-            ConfigureGrid(this.dgvUsersByRole, 18, 155);
-            ConfigureGrid(this.dgvPostsByType, 348, 155);
-            ConfigureGrid(this.dgvPostsByStatus, 678, 155);
+            this.reportViewer.Dock = DockStyle.Fill;
+            this.reportViewer.LocalReport.ReportEmbeddedResource = ReportResource;
+            this.reportViewer.Name = "reportViewer";
+            this.reportViewer.ProcessingMode = ProcessingMode.Local;
+            this.reportViewer.Visible = false;
 
             this.AutoScaleMode = AutoScaleMode.None;
             this.BackColor = Color.White;
             this.ClientSize = new Size(1021, 355);
-            this.Controls.Add(lblTitle);
-            this.Controls.Add(this.btnRefresh);
-            this.Controls.Add(this.lblTotalUsers);
-            this.Controls.Add(this.lblTotalPosts);
-            this.Controls.Add(this.lblApprovedPosts);
-            this.Controls.Add(this.lblUnreadMessages);
-            this.Controls.Add(lblUsersGrid);
-            this.Controls.Add(lblTypesGrid);
-            this.Controls.Add(lblStatusGrid);
-            this.Controls.Add(this.dgvUsersByRole);
-            this.Controls.Add(this.dgvPostsByType);
-            this.Controls.Add(this.dgvPostsByStatus);
+            this.Controls.Add(this.reportViewer);
+            this.Controls.Add(topPanel);
             this.Font = new Font("Segoe UI", 10F);
             this.FormBorderStyle = FormBorderStyle.None;
             this.Name = "AdminStatisticsForm";
             this.Text = "Báo cáo thống kê";
 
-            ((System.ComponentModel.ISupportInitialize)this.dgvUsersByRole).EndInit();
-            ((System.ComponentModel.ISupportInitialize)this.dgvPostsByType).EndInit();
-            ((System.ComponentModel.ISupportInitialize)this.dgvPostsByStatus).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
         }
 
-        private static void ConfigureMetricLabel(Label label, string text, int left, int top)
-        {
-            label.BackColor = Color.FromArgb(0, 114, 118);
-            label.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label.ForeColor = Color.White;
-            label.Location = new Point(left, top);
-            label.Size = new Size(210, 42);
-            label.Text = text;
-            label.TextAlign = ContentAlignment.MiddleCenter;
-        }
-
-        private static void ConfigureGridTitle(Label label, string text, int left, int top)
-        {
-            label.AutoSize = true;
-            label.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label.ForeColor = Color.FromArgb(0, 114, 118);
-            label.Location = new Point(left, top);
-            label.Text = text;
-        }
-
-        private static void ConfigureGrid(DataGridView grid, int left, int top)
-        {
-            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            grid.BackgroundColor = Color.White;
-            grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            grid.Location = new Point(left, top);
-            grid.ReadOnly = true;
-            grid.RowHeadersWidth = 51;
-            grid.Size = new Size(312, 185);
-        }
-
-        private static void ConfigureButton(Button button, string text, Color backColor, int left, int top, int width, int height)
-        {
-            button.BackColor = backColor;
-            button.FlatAppearance.BorderSize = 0;
-            button.FlatStyle = FlatStyle.Flat;
-            button.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button.ForeColor = Color.White;
-            button.Location = new Point(left, top);
-            button.Size = new Size(width, height);
-            button.Text = text;
-            button.UseVisualStyleBackColor = false;
-        }
-
-        private void LoadStatistics()
+        private void LoadReport()
         {
             try
             {
                 AdminStatisticsReport report = this._repository.LoadStatistics();
+                List<AdminStatisticsReportRow> rows = BuildReportRows(report);
 
-                this.lblTotalUsers.Text = "Người dùng: " + report.TotalUsers;
-                this.lblTotalPosts.Text = "Bài báo: " + report.TotalPublications;
-                this.lblApprovedPosts.Text = "Đã duyệt: " + report.ApprovedPublications + " | Chờ: " + report.PendingPublications;
-                this.lblUnreadMessages.Text = "Thư chưa đọc: " + report.UnreadMessages;
-
-                BindStatisticGrid(this.dgvUsersByRole, report.UsersByRole);
-                BindStatisticGrid(this.dgvPostsByType, report.PublicationsByType);
-                BindStatisticGrid(this.dgvPostsByStatus, report.PublicationsByStatus);
+                this.reportViewer.Visible = true;
+                this.reportViewer.LocalReport.ReportEmbeddedResource = ReportResource;
+                this.reportViewer.LocalReport.DataSources.Clear();
+                this.reportViewer.LocalReport.DataSources.Add(
+                    new ReportDataSource("DataSetAdminStatistics", rows));
+                this.reportViewer.RefreshReport();
             }
             catch (Exception ex)
             {
@@ -158,25 +95,49 @@ namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
             }
         }
 
-        private static void BindStatisticGrid(DataGridView grid, object dataSource)
+        private static List<AdminStatisticsReportRow> BuildReportRows(AdminStatisticsReport report)
         {
-            grid.DataSource = null;
-            grid.DataSource = dataSource;
-
-            if (grid.Columns["Name"] != null)
+            List<AdminStatisticsReportRow> rows = new List<AdminStatisticsReportRow>
             {
-                grid.Columns["Name"].HeaderText = "Nhóm";
-            }
+                new AdminStatisticsReportRow("Tổng quan", "Tổng người dùng", report.TotalUsers),
+                new AdminStatisticsReportRow("Tổng quan", "Tổng bài báo", report.TotalPublications),
+                new AdminStatisticsReportRow("Tổng quan", "Bài báo đã duyệt", report.ApprovedPublications),
+                new AdminStatisticsReportRow("Tổng quan", "Bài báo chờ duyệt", report.PendingPublications),
+                new AdminStatisticsReportRow("Tổng quan", "Thư chưa đọc", report.UnreadMessages)
+            };
 
-            if (grid.Columns["Count"] != null)
+            AddStatisticRows(rows, "Người dùng theo vai trò", report.UsersByRole);
+            AddStatisticRows(rows, "Bài báo theo loại", report.PublicationsByType);
+            AddStatisticRows(rows, "Trạng thái duyệt", report.PublicationsByStatus);
+
+            return rows;
+        }
+
+        private static void AddStatisticRows(List<AdminStatisticsReportRow> rows, string section, IEnumerable<StatisticRow> statistics)
+        {
+            foreach (StatisticRow statistic in statistics)
             {
-                grid.Columns["Count"].HeaderText = "Số lượng";
+                rows.Add(new AdminStatisticsReportRow(section, statistic.Name, statistic.Count));
             }
         }
 
         private void btnRefresh_Click(object? sender, EventArgs e)
         {
-            LoadStatistics();
+            LoadReport();
         }
+    }
+
+    public class AdminStatisticsReportRow
+    {
+        public AdminStatisticsReportRow(string section, string name, int count)
+        {
+            this.Section = section;
+            this.Name = name;
+            this.Count = count;
+        }
+
+        public string Section { get; set; }
+        public string Name { get; set; }
+        public int Count { get; set; }
     }
 }

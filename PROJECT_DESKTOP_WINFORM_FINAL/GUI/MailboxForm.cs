@@ -79,7 +79,7 @@ namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
             leftLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 54F));
 
             rightLayout.ColumnCount = 2;
-            rightLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
+            rightLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 118F));
             rightLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             rightLayout.Dock = DockStyle.Fill;
             rightLayout.Margin = new Padding(10, 0, 0, 0);
