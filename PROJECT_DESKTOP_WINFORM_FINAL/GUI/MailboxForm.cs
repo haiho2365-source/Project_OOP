@@ -22,14 +22,18 @@ namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
         private Button btnDelete = null!;
         private Button btnClear = null!;
 
+        public MailboxForm()
+        {
+        }
+
         public MailboxForm(Person currentUser)
         {
             this._currentUser = currentUser;
-            InitializeComponent();
+            SetupUI();
             LoadMessages();
         }
 
-        private void InitializeComponent()
+        private void SetupUI()
         {
             Label lblTitle = new Label();
             Label lblSender = new Label();
@@ -117,7 +121,7 @@ namespace PROJECT_DESKTOP_WINFORM_FINAL.GUI
 
             ConfigureFormLabel(lblReceiver, "Người nhận");
             ConfigureFormTextBox(this.txtReceiverEmail);
-            this.txtReceiverEmail.Text = this._currentUser is Admin ? "admin@ueh.edu.vn" : "admin@ueh.edu.vn";
+            this.txtReceiverEmail.Text = this._currentUser is Admin ? "" : "admin@ueh.edu.vn";
 
             ConfigureFormLabel(lblSubject, "Tiêu đề");
             ConfigureFormTextBox(this.txtSubject);
